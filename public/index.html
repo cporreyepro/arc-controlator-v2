@@ -1,12 +1,16 @@
-```html id="a9w2pr"
+```html
 <!doctype html>
 <html lang="fr">
+
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>ARC CONTROLATOR</title>
 
 <style>
+
 :root{
   --gold:#d4af37;
   --light:#f4f4f4;
@@ -113,14 +117,6 @@ button:disabled{
   flex-wrap:wrap;
 }
 
-.note{
-  background:#fff8dc;
-  border-left:5px solid var(--gold);
-  padding:12px;
-  border-radius:8px;
-  font-size:14px;
-}
-
 footer{
   text-align:center;
   color:#777;
@@ -129,6 +125,7 @@ footer{
 }
 
 @media(max-width:760px){
+
   .grid{
     grid-template-columns:1fr;
   }
@@ -136,17 +133,25 @@ footer{
   header h1{
     font-size:27px;
   }
+
 }
+
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
 </head>
 
 <body>
 
 <header>
-  <h1>ARC CONTROLATOR</h1>
-  <p>Contrôle intelligent — Devis → Métrage → Commande → ARC</p>
+
+<h1>ARC CONTROLATOR</h1>
+
+<p>
+Contrôle intelligent — Devis → Métrage → Commande → ARC
+</p>
+
 </header>
 
 <main>
@@ -154,12 +159,6 @@ footer{
 <section class="card">
 
 <h2>Contrôle dossier</h2>
-
-<div class="note">
-Cette version compresse les images et extrait le texte des PDF pour éviter les erreurs de taille.
-</div>
-
-<br>
 
 <div class="grid">
 
@@ -190,17 +189,35 @@ Cette version compresse les images et extrait le texte des PDF pour éviter les 
 <label>Niveau de contrôle</label>
 
 <select id="mode">
-<option>Contrôle complet</option>
-<option>Contrôle dimensions uniquement</option>
-<option>Contrôle options / couleurs / sens d’ouverture</option>
-<option>Contrôle ARC avant validation</option>
+
+<option>
+Contrôle complet
+</option>
+
+<option>
+Contrôle dimensions uniquement
+</option>
+
+<option>
+Contrôle options / couleurs / sens d’ouverture
+</option>
+
+<option>
+Contrôle ARC avant validation
+</option>
+
 </select>
 
 <br><br>
 
 <div class="actions">
-<button id="analyzeBtn">Contrôler le dossier</button>
+
+<button id="analyzeBtn">
+Contrôler le dossier
+</button>
+
 <span id="status" class="status"></span>
+
 </div>
 
 </section>
@@ -212,6 +229,12 @@ Cette version compresse les images et extrait le texte des PDF pour éviter les 
 <div id="result" class="result">
 Le rapport apparaîtra ici.
 </div>
+
+<br>
+
+<button id="downloadBtn">
+Télécharger le rapport
+</button>
 
 </section>
 
@@ -441,6 +464,31 @@ $("analyzeBtn").addEventListener("click",async()=>{
       "Erreur";
 
   }
+
+});
+
+$("downloadBtn").addEventListener("click",()=>{
+
+  const text = $("result").textContent;
+
+  const blob = new Blob(
+    [text],
+    {
+      type:"text/plain;charset=utf-8"
+    }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+
+  a.href = url;
+
+  a.download = "rapport_arc_controlator.txt";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
 
 });
 
