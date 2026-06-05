@@ -1,4 +1,4 @@
-```html id="r7v2pk"
+```html
 <!doctype html>
 <html lang="fr">
 
@@ -68,13 +68,18 @@ label{
   margin-bottom:7px;
 }
 
-input,select{
+input,select,textarea{
   width:100%;
   padding:12px;
   border:1px solid #ddd;
   border-radius:10px;
   background:#fafafa;
   font-size:14px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
 }
 
 button{
@@ -115,6 +120,26 @@ button:disabled{
   gap:10px;
   align-items:center;
   flex-wrap:wrap;
+}
+
+.decision-box{
+  background:#fff;
+  border:3px solid var(--gold);
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:18px;
+  display:none;
+}
+
+.decision-title{
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.decision-value{
+  font-size:32px;
+  font-weight:900;
 }
 
 footer{
@@ -186,6 +211,17 @@ Contrôle intelligent — Devis → Métrage → Commande → ARC
 
 <br>
 
+<label>
+Consigne particulière
+</label>
+
+<textarea
+  id="consigne"
+  placeholder="Exemple : Ne contrôler que les fenêtres. L’ARC ne concerne pas les volets."
+></textarea>
+
+<br><br>
+
 <label>Niveau de contrôle</label>
 
 <select id="mode">
@@ -221,6 +257,22 @@ Contrôler le dossier
 </div>
 
 </section>
+
+<div
+  id="decisionBox"
+  class="decision-box"
+>
+
+<div class="decision-title">
+DÉCISION IA
+</div>
+
+<div
+  id="decisionValue"
+  class="decision-value"
+></div>
+
+</div>
 
 <section class="card">
 
@@ -457,18 +509,16 @@ $("analyzeBtn").addEventListener("click",async()=>{
 
   };
 
- if(
-  !files.devis &&
-  !files.metrage &&
-  !files.commande &&
-  !files.arc
-){
+  if(
+    !files.devis &&
+    !files.metrage &&
+    !files.commande &&
+    !files.arc
+  ){
 
-  alert("Ajoute au moins un document.");
+    alert("Ajoute au moins un document.");
 
-  return;
-
-}
+    return;
 
   }
 
@@ -478,31 +528,59 @@ $("analyzeBtn").addEventListener("click",async()=>{
   $("result").textContent =
     "Préparation des documents...";
 
+  $("decisionBox").style.display =
+    "none";
+
   $("analyzeBtn").disabled = true;
 
   try{
 
     const docs = [];
 
-if(files.devis){
-  docs.push(...(await prepareDocument(files.devis,"DEVIS")));
-}
+    if(files.devis){
+      docs.push(...(
+        await prepareDocument(
+          files.devis,
+          "DEVIS"
+        )
+      ));
+    }
 
-if(files.metrage){
-  docs.push(...(await prepareDocument(files.metrage,"METRAGE")));
-}
+    if(files.metrage){
+      docs.push(...(
+        await prepareDocument(
+          files.metrage,
+          "METRAGE"
+        )
+      ));
+    }
 
-if(files.commande){
-  docs.push(...(await prepareDocument(files.commande,"COMMANDE")));
-}
+    if(files.commande){
+      docs.push(...(
+        await prepareDocument(
+          files.commande,
+          "COMMANDE"
+        )
+      ));
+    }
 
-if(files.arc){
-  docs.push(...(await prepareDocument(files.arc,"ARC")));
-}
+    if(files.arc){
+      docs.push(...(
+        await prepareDocument(
+          files.arc,
+          "ARC"
+        )
+      ));
+    }
 
     const payload = {
+
       mode:$("mode").value,
+
+      consigne:$("consigne").value,
+
       docs
+
     };
 
     $("status").textContent =
@@ -544,11 +622,40 @@ if(files.arc){
 
     }
 
-    $("result").textContent =
+    const report =
       data.report || "Aucun rapport.";
+
+    $("result").textContent = report;
 
     $("status").textContent =
       "Analyse terminée.";
+
+    const upper =
+      report.toUpperCase();
+
+    let decision = "";
+
+    if(upper.includes("FEU VERT")){
+      decision = "FEU VERT";
+    }else if(
+      upper.includes("BLOCAGE")
+    ){
+      decision = "BLOCAGE";
+    }else if(
+      upper.includes("A VERIFIER")
+    ){
+      decision = "A VERIFIER";
+    }
+
+    if(decision){
+
+      $("decisionValue").textContent =
+        decision;
+
+      $("decisionBox").style.display =
+        "block";
+
+    }
 
   }catch(err){
 
