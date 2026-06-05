@@ -1,9 +1,20 @@
-const OpenAI = require("openai");
+import OpenAI from "openai";
 
 const SYSTEM_PROMPT = `
 Tu es ARC CONTROLATOR.
 Tu compares 4 documents : devis, métrage, commande et ARC.
-Tu dois détecter les incohérences de dimensions, produits, couleurs, options, sens d'ouverture, pose, accessoires, motorisation et délais.
+
+Tu dois détecter :
+- incohérences de dimensions
+- produits différents
+- couleurs différentes
+- options manquantes
+- sens d'ouverture incohérent
+- type de pose incohérent
+- accessoires manquants
+- motorisation différente
+- délais ou informations contradictoires
+
 Réponds avec :
 1. Résumé du dossier
 2. Incohérences critiques
@@ -13,7 +24,7 @@ Réponds avec :
 6. Actions à faire
 `;
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Méthode non autorisée." });
   }
@@ -56,7 +67,12 @@ ${doc.content || "Aucun contenu exploitable."}
       input: [
         {
           role: "system",
-          content: [{ type: "input_text", text: SYSTEM_PROMPT }]
+          content: [
+            {
+              type: "input_text",
+              text: SYSTEM_PROMPT
+            }
+          ]
         },
         {
           role: "user",
@@ -75,4 +91,4 @@ ${doc.content || "Aucun contenu exploitable."}
       error: error.message || "Erreur analyse."
     });
   }
-};
+}
