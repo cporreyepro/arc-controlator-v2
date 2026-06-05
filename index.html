@@ -4,7 +4,8 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ARC CONTROLATOR</title>
 <style>
-:root{--gold:#d4af37;--light:#f4f4f4}*{box-sizing:border-box}
+:root{--gold:#d4af37;--light:#f4f4f4}
+*{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:#111}
 header{background:linear-gradient(135deg,#000,#171717);color:white;text-align:center;padding:34px 20px;border-bottom:5px solid var(--gold)}
 header h1{margin:0;color:var(--gold);letter-spacing:4px;font-size:34px}
@@ -17,16 +18,22 @@ button{background:#000;color:white;border:0;padding:14px 22px;border-radius:10px
 button:disabled{opacity:.5}.status{font-weight:700;color:#333;margin-left:10px}
 .result{white-space:pre-wrap;background:#111;color:#f5f5f5;border-radius:12px;padding:20px;min-height:180px;line-height:1.45;overflow:auto}
 .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.note{background:#fff8dc;border-left:5px solid var(--gold);padding:12px;border-radius:8px;font-size:14px}
 footer{text-align:center;color:#777;font-size:13px;padding:24px}
 @media(max-width:760px){.grid{grid-template-columns:1fr}header h1{font-size:27px}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 <header><h1>ARC CONTROLATOR</h1><p>Contrôle intelligent — Devis → Métrage → Commande → ARC</p></header>
 <main>
 <section class="card">
 <h2>Contrôle dossier</h2>
-<p>Dépose les 4 documents. L’IA détecte les incohérences avant validation ARC.</p>
+<div class="note">
+Cette version évite les fichiers trop lourds : les PDF texte sont lus dans le navigateur, les images sont compressées avant envoi.
+Si un PDF est un scan sans texte, utilise plutôt une image claire ou un PDF OCR.
+</div>
+<br>
 <div class="grid">
 <div><label>1. Devis client</label><input id="devis" type="file" accept=".pdf,.png,.jpg,.jpeg,.txt,.csv"></div>
 <div><label>2. Fiche métrage</label><input id="metrage" type="file" accept=".pdf,.png,.jpg,.jpeg,.txt,.csv"></div>
@@ -44,18 +51,95 @@ footer{text-align:center;color:#777;font-size:13px;padding:24px}
 <footer>ARC CONTROLATOR — Outil d’aide au contrôle. Validation humaine obligatoire.</footer>
 <script>
 const $=(id)=>document.getElementById(id);
-async function fileToPayload(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve({name:file.name,type:file.type||"application/octet-stream",data:r.result.split(",")[1]});r.onerror=reject;r.readAsDataURL(file);});}
+pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+function readTextFile(file){
+  return new Promise((resolve,reject)=>{
+    const r=new FileReader();
+    r.onload=()=>resolve(r.result || "");
+    r.onerror=reject;
+    r.readAsText(file);
+  });
+}
+
+async function extractPdfText(file){
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({data: arrayBuffer}).promise;
+  let text = "";
+  const maxPages = Math.min(pdf.numPages, 12);
+  for(let i=1;i<=maxPages;i++){
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    const strings = content.items.map(item => item.str).join(" ");
+    text += "\\n\\n--- PAGE " + i + " ---\\n" + strings;
+  }
+  if(pdf.numPages > maxPages){
+    text += "\\n\\nNote : PDF limité aux " + maxPages + " premières pages sur " + pdf.numPages + ".";
+  }
+  return text.trim();
+}
+
+function compressImage(file){
+  return new Promise((resolve,reject)=>{
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = e => img.src = e.target.result;
+    reader.onerror = reject;
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const maxW = 1400;
+      const scale = Math.min(1, maxW / img.width);
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      const dataUrl = canvas.toDataURL("image/jpeg",0.65);
+      resolve(dataUrl);
+    };
+    img.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function prepareDocument(file, label){
+  const name = file.name.toLowerCase();
+  const type = file.type || "";
+  if(name.endsWith(".pdf") || type.includes("pdf")){
+    const text = await extractPdfText(file);
+    return { label, name:file.name, kind:"text", content:text || "Aucun texte extractible. Document probablement scanné ou image." };
+  }
+  if(type.startsWith("image/") || name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png")){
+    const image = await compressImage(file);
+    return { label, name:file.name, kind:"image", content:image };
+  }
+  const text = await readTextFile(file);
+  return { label, name:file.name, kind:"text", content:text };
+}
+
 $("analyzeBtn").addEventListener("click",async()=>{
-const files={devis:$("devis").files[0],metrage:$("metrage").files[0],commande:$("commande").files[0],arc:$("arc").files[0]};
-if(!files.devis||!files.metrage||!files.commande||!files.arc){alert("Ajoute les 4 documents : devis, métrage, commande et ARC.");return;}
-$("analyzeBtn").disabled=true;$("downloadBtn").disabled=true;$("status").textContent="Analyse en cours...";$("result").textContent="Analyse en cours...";
-try{
-const payload={mode:$("mode").value,files:{devis:await fileToPayload(files.devis),metrage:await fileToPayload(files.metrage),commande:await fileToPayload(files.commande),arc:await fileToPayload(files.arc)}};
-const res=await fetch("/api/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
-const raw=await res.text();let data;try{data=JSON.parse(raw)}catch(e){throw new Error("Réponse serveur illisible : "+raw.slice(0,500))}
-if(!res.ok)throw new Error(data.error||"Erreur serveur.");
-$("result").textContent=data.report||"Aucun rapport généré.";$("downloadBtn").disabled=false;$("status").textContent="Analyse terminée.";
-}catch(err){$("result").textContent="Erreur : "+err.message;$("status").textContent="Erreur."}finally{$("analyzeBtn").disabled=false;}
+  const files={devis:$("devis").files[0],metrage:$("metrage").files[0],commande:$("commande").files[0],arc:$("arc").files[0]};
+  if(!files.devis||!files.metrage||!files.commande||!files.arc){alert("Ajoute les 4 documents : devis, métrage, commande et ARC.");return;}
+  $("analyzeBtn").disabled=true;$("downloadBtn").disabled=true;$("status").textContent="Préparation des documents...";$("result").textContent="Préparation des documents...";
+  try{
+    const docs = [
+      await prepareDocument(files.devis,"DEVIS"),
+      await prepareDocument(files.metrage,"METRAGE"),
+      await prepareDocument(files.commande,"COMMANDE"),
+      await prepareDocument(files.arc,"ARC")
+    ];
+    $("status").textContent="Analyse en cours...";
+    $("result").textContent="Analyse en cours...";
+    const payload={mode:$("mode").value,docs};
+    const size = new Blob([JSON.stringify(payload)]).size;
+    if(size > 3500000){
+      throw new Error("Dossier encore trop lourd après compression. Réduis les documents ou utilise des PDF texte/OCR plus légers.");
+    }
+    const res=await fetch("/api/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    const raw=await res.text();let data;try{data=JSON.parse(raw)}catch(e){throw new Error("Réponse serveur illisible : "+raw.slice(0,500))}
+    if(!res.ok)throw new Error(data.error||"Erreur serveur.");
+    $("result").textContent=data.report||"Aucun rapport généré.";$("downloadBtn").disabled=false;$("status").textContent="Analyse terminée.";
+  }catch(err){$("result").textContent="Erreur : "+err.message;$("status").textContent="Erreur."}
+  finally{$("analyzeBtn").disabled=false;}
 });
 $("downloadBtn").addEventListener("click",()=>{const text=$("result").textContent;const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="rapport_arc_controlator.txt";a.click();URL.revokeObjectURL(url);});
 </script>
