@@ -457,16 +457,18 @@ $("analyzeBtn").addEventListener("click",async()=>{
 
   };
 
-  if(
-    !files.devis ||
-    !files.metrage ||
-    !files.commande ||
-    !files.arc
-  ){
+ if(
+  !files.devis &&
+  !files.metrage &&
+  !files.commande &&
+  !files.arc
+){
 
-    alert("Ajoute les 4 documents.");
+  alert("Ajoute au moins un document.");
 
-    return;
+  return;
+
+}
 
   }
 
@@ -480,29 +482,23 @@ $("analyzeBtn").addEventListener("click",async()=>{
 
   try{
 
-    const docs = [
+    const docs = [];
 
-      ...(await prepareDocument(
-        files.devis,
-        "DEVIS"
-      )),
+if(files.devis){
+  docs.push(...(await prepareDocument(files.devis,"DEVIS")));
+}
 
-      ...(await prepareDocument(
-        files.metrage,
-        "METRAGE"
-      )),
+if(files.metrage){
+  docs.push(...(await prepareDocument(files.metrage,"METRAGE")));
+}
 
-      ...(await prepareDocument(
-        files.commande,
-        "COMMANDE"
-      )),
+if(files.commande){
+  docs.push(...(await prepareDocument(files.commande,"COMMANDE")));
+}
 
-      ...(await prepareDocument(
-        files.arc,
-        "ARC"
-      ))
-
-    ];
+if(files.arc){
+  docs.push(...(await prepareDocument(files.arc,"ARC")));
+}
 
     const payload = {
       mode:$("mode").value,
