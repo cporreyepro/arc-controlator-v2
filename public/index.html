@@ -1,4 +1,4 @@
-```html
+```html id="r7v2pk"
 <!doctype html>
 <html lang="fr">
 
@@ -233,7 +233,7 @@ Le rapport apparaîtra ici.
 <br>
 
 <button id="downloadBtn">
-Télécharger le rapport
+Télécharger le rapport PDF
 </button>
 
 </section>
@@ -267,7 +267,7 @@ async function readTextFile(file){
 
 }
 
-async function extractPdfText(file){
+async function extractPdfTextAndImages(file,label){
 
   const arrayBuffer = await file.arrayBuffer();
 
@@ -277,7 +277,9 @@ async function extractPdfText(file){
 
   let text = "";
 
-  const maxPages = Math.min(pdf.numPages,10);
+  const images = [];
+
+  const maxPages = Math.min(pdf.numPages,6);
 
   for(let i=1;i<=maxPages;i++){
 
@@ -285,13 +287,52 @@ async function extractPdfText(file){
 
     const content = await page.getTextContent();
 
-    const strings = content.items.map(item=>item.str).join(" ");
+    const strings = content.items
+      .map(item=>item.str)
+      .join(" ")
+      .trim();
 
-    text += "\n\nPAGE "+i+"\n"+strings;
+    if(strings){
+
+      text += "\n\nPAGE "+i+"\n"+strings;
+
+    }
+
+    const viewport = page.getViewport({
+      scale:1.5
+    });
+
+    const canvas = document.createElement("canvas");
+
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = viewport.width;
+
+    canvas.height = viewport.height;
+
+    await page.render({
+      canvasContext:ctx,
+      viewport
+    }).promise;
+
+    const img = canvas.toDataURL(
+      "image/jpeg",
+      0.65
+    );
+
+    images.push({
+      label:label+"_PAGE_"+i,
+      name:file.name+" page "+i,
+      kind:"image",
+      content:img
+    });
 
   }
 
-  return text;
+  return {
+    text:text.trim(),
+    images
+  };
 
 }
 
@@ -321,7 +362,13 @@ function compressImage(file){
 
       const ctx = canvas.getContext("2d");
 
-      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
 
       const dataUrl = canvas.toDataURL(
         "image/jpeg",
@@ -348,14 +395,27 @@ async function prepareDocument(file,label){
 
   if(name.endsWith(".pdf") || type.includes("pdf")){
 
-    const text = await extractPdfText(file);
+    const pdfData =
+      await extractPdfTextAndImages(
+        file,
+        label
+      );
 
-    return {
-      label,
-      name:file.name,
-      kind:"text",
-      content:text
-    };
+    if(
+      pdfData.text &&
+      pdfData.text.length > 80
+    ){
+
+      return [{
+        label,
+        name:file.name,
+        kind:"text",
+        content:pdfData.text
+      }];
+
+    }
+
+    return pdfData.images;
 
   }
 
@@ -363,36 +423,46 @@ async function prepareDocument(file,label){
 
     const image = await compressImage(file);
 
-    return {
+    return [{
       label,
       name:file.name,
       kind:"image",
       content:image
-    };
+    }];
 
   }
 
   const text = await readTextFile(file);
 
-  return {
+  return [{
     label,
     name:file.name,
     kind:"text",
     content:text
-  };
+  }];
 
 }
 
 $("analyzeBtn").addEventListener("click",async()=>{
 
   const files = {
+
     devis:$("devis").files[0],
+
     metrage:$("metrage").files[0],
+
     commande:$("commande").files[0],
+
     arc:$("arc").files[0]
+
   };
 
-  if(!files.devis || !files.metrage || !files.commande || !files.arc){
+  if(
+    !files.devis ||
+    !files.metrage ||
+    !files.commande ||
+    !files.arc
+  ){
 
     alert("Ajoute les 4 documents.");
 
@@ -400,53 +470,82 @@ $("analyzeBtn").addEventListener("click",async()=>{
 
   }
 
-  $("status").textContent = "Préparation...";
+  $("status").textContent =
+    "Préparation...";
 
-  $("result").textContent = "Préparation des documents...";
+  $("result").textContent =
+    "Préparation des documents...";
+
+  $("analyzeBtn").disabled = true;
 
   try{
 
     const docs = [
 
-      await prepareDocument(files.devis,"DEVIS"),
+      ...(await prepareDocument(
+        files.devis,
+        "DEVIS"
+      )),
 
-      await prepareDocument(files.metrage,"METRAGE"),
+      ...(await prepareDocument(
+        files.metrage,
+        "METRAGE"
+      )),
 
-      await prepareDocument(files.commande,"COMMANDE"),
+      ...(await prepareDocument(
+        files.commande,
+        "COMMANDE"
+      )),
 
-      await prepareDocument(files.arc,"ARC")
+      ...(await prepareDocument(
+        files.arc,
+        "ARC"
+      ))
 
     ];
 
-    $("status").textContent = "Analyse en cours...";
+    const payload = {
+      mode:$("mode").value,
+      docs
+    };
 
-    const res = await fetch("/api/analyze",{
+    $("status").textContent =
+      "Analyse en cours...";
 
-      method:"POST",
+    $("result").textContent =
+      "Analyse en cours...";
 
-      headers:{
-        "Content-Type":"application/json"
-      },
-
-      body:JSON.stringify({
-        mode:$("mode").value,
-        docs
-      })
-
-    });
+    const res = await fetch(
+      "/api/analyze",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify(payload)
+      }
+    );
 
     const raw = await res.text();
 
     let data;
 
     try{
+
       data = JSON.parse(raw);
+
     }catch(e){
+
       throw new Error(raw);
+
     }
 
     if(!res.ok){
-      throw new Error(data.error || "Erreur");
+
+      throw new Error(
+        data.error || "Erreur"
+      );
+
     }
 
     $("result").textContent =
@@ -463,43 +562,66 @@ $("analyzeBtn").addEventListener("click",async()=>{
     $("status").textContent =
       "Erreur";
 
+  }finally{
+
+    $("analyzeBtn").disabled = false;
+
   }
 
 });
 
 $("downloadBtn").addEventListener("click",()=>{
 
-  const text = $("result").textContent;
+  const text =
+    $("result").textContent;
 
-  const printWindow = window.open("", "_blank");
+  const printWindow =
+    window.open("", "_blank");
 
   printWindow.document.write(`
+
     <html>
+
       <head>
-        <title>Rapport ARC CONTROLATOR</title>
+
+        <title>
+          Rapport ARC CONTROLATOR
+        </title>
+
         <style>
+
           body{
-            font-family: Arial, sans-serif;
-            padding: 30px;
-            line-height: 1.5;
-            color: #111;
+            font-family:Arial,sans-serif;
+            padding:30px;
+            line-height:1.5;
+            color:#111;
           }
+
           h1{
             color:#d4af37;
             border-bottom:3px solid #000;
             padding-bottom:10px;
           }
+
           pre{
-            white-space: pre-wrap;
-            font-size: 13px;
+            white-space:pre-wrap;
+            font-size:13px;
           }
+
         </style>
+
       </head>
+
       <body>
+
         <h1>ARC CONTROLATOR</h1>
+
         <pre>${text}</pre>
+
       </body>
+
     </html>
+
   `);
 
   printWindow.document.close();
@@ -507,3 +629,9 @@ $("downloadBtn").addEventListener("click",()=>{
   printWindow.print();
 
 });
+
+</script>
+
+</body>
+</html>
+```
