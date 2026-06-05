@@ -1,340 +1,123 @@
-Groupe GTZ
 <!doctype html>
 <html lang="fr">
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>ARC CONTROLATOR</title>
 
 <style>
-
-:root{
-  --gold:#d4af37;
-  --light:#f4f4f4;
-}
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--light);
-  color:#111;
-}
-
-header{
-  background:linear-gradient(135deg,#000,#171717);
-  color:white;
-  text-align:center;
-  padding:34px 20px;
-  border-bottom:5px solid var(--gold);
-}
-
-header h1{
-  margin:0;
-  color:var(--gold);
-  letter-spacing:4px;
-  font-size:34px;
-}
-
-main{
-  max-width:1100px;
-  margin:26px auto;
-  padding:0 18px;
-}
-
-.card{
-  background:white;
-  border-radius:14px;
-  padding:22px;
-  margin-bottom:18px;
-  box-shadow:0 8px 24px rgba(0,0,0,.08);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;
-}
-
-label{
-  font-weight:700;
-  display:block;
-  margin-bottom:7px;
-}
-
-input,select,textarea{
-  width:100%;
-  padding:12px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  background:#fafafa;
-  font-size:14px;
-}
-
-textarea{
-  min-height:90px;
-  resize:vertical;
-}
-
-button{
-  background:#000;
-  color:white;
-  border:0;
-  padding:14px 22px;
-  border-radius:10px;
-  border-bottom:4px solid var(--gold);
-  font-weight:700;
-  cursor:pointer;
-  font-size:16px;
-}
-
-button:disabled{
-  opacity:.5;
-}
-
-.status{
-  font-weight:700;
-  color:#333;
-  margin-left:10px;
-}
-
-.result{
-  white-space:pre-wrap;
-  background:#111;
-  color:#f5f5f5;
-  border-radius:12px;
-  padding:20px;
-  min-height:180px;
-  line-height:1.45;
-  overflow:auto;
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
-.decision-box{
-  background:#fff;
-  border:3px solid var(--gold);
-  border-radius:14px;
-  padding:18px;
-  margin-bottom:18px;
-  display:none;
-}
-
-.decision-title{
-  font-size:18px;
-  font-weight:900;
-  margin-bottom:10px;
-}
-
-.decision-value{
-  font-size:32px;
-  font-weight:900;
-}
-
-footer{
-  text-align:center;
-  color:#777;
-  font-size:13px;
-  padding:24px;
-}
-
-@media(max-width:760px){
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  header h1{
-    font-size:27px;
-  }
-
-}
-
+:root{--gold:#d4af37;--light:#f4f4f4}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:#111}
+header{background:linear-gradient(135deg,#000,#171717);color:white;text-align:center;padding:34px 20px;border-bottom:5px solid var(--gold)}
+header h1{margin:0;color:var(--gold);letter-spacing:4px;font-size:34px}
+main{max-width:1100px;margin:26px auto;padding:0 18px}
+.card{background:white;border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+label{font-weight:700;display:block;margin-bottom:7px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;background:#fafafa;font-size:14px}
+textarea{min-height:90px;resize:vertical}
+button{background:#000;color:white;border:0;padding:14px 22px;border-radius:10px;border-bottom:4px solid var(--gold);font-weight:700;cursor:pointer;font-size:16px}
+button:disabled{opacity:.5}
+.status{font-weight:700;color:#333;margin-left:10px}
+.result{white-space:pre-wrap;background:#111;color:#f5f5f5;border-radius:12px;padding:20px;min-height:180px;line-height:1.45;overflow:auto}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.decision-box{background:#fff;border:3px solid var(--gold);border-radius:14px;padding:18px;margin-bottom:18px;display:none}
+.decision-title{font-size:18px;font-weight:900;margin-bottom:10px}
+.decision-value{font-size:32px;font-weight:900}
+footer{text-align:center;color:#777;font-size:13px;padding:24px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}header h1{font-size:27px}}
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
 </head>
 
 <body>
 
 <header>
-
 <h1>ARC CONTROLATOR</h1>
-
-<p>
-Contrôle intelligent — Devis → Métrage → Commande → ARC
-</p>
-
+<p>Contrôle intelligent — Devis → Métrage → Commande → ARC</p>
 </header>
 
 <main>
 
 <section class="card">
-
 <h2>Contrôle dossier</h2>
 
 <div class="grid">
-
-<div>
-<label>1. Devis client</label>
-<input id="devis" type="file">
-</div>
-
-<div>
-<label>2. Fiche métrage</label>
-<input id="metrage" type="file">
-</div>
-
-<div>
-<label>3. Commande fournisseur</label>
-<input id="commande" type="file">
-</div>
-
-<div>
-<label>4. ARC fournisseur</label>
-<input id="arc" type="file">
-</div>
-
+<div><label>1. Devis client</label><input id="devis" type="file"></div>
+<div><label>2. Fiche métrage</label><input id="metrage" type="file"></div>
+<div><label>3. Commande fournisseur</label><input id="commande" type="file"></div>
+<div><label>4. ARC fournisseur</label><input id="arc" type="file"></div>
 </div>
 
 <br>
 
-<label>
-Consigne particulière
-</label>
-
-<textarea
-  id="consigne"
-  placeholder="Exemple : Ne contrôler que les fenêtres. L’ARC ne concerne pas les volets."
-></textarea>
+<label>Consigne particulière</label>
+<textarea id="consigne" placeholder="Exemple : Ne contrôler que les fenêtres. L’ARC ne concerne pas les volets."></textarea>
 
 <br><br>
 
 <label>Niveau de contrôle</label>
-
 <select id="mode">
-
-<option>
-Contrôle complet
-</option>
-
-<option>
-Contrôle dimensions uniquement
-</option>
-
-<option>
-Contrôle options / couleurs / sens d’ouverture
-</option>
-
-<option>
-Contrôle ARC avant validation
-</option>
-
+<option>Contrôle complet</option>
+<option>Contrôle dimensions uniquement</option>
+<option>Contrôle options / couleurs / sens d’ouverture</option>
+<option>Contrôle ARC avant validation</option>
 </select>
 
 <br><br>
 
 <div class="actions">
-
-<button id="analyzeBtn">
-Contrôler le dossier
-</button>
-
+<button id="analyzeBtn">Contrôler le dossier</button>
 <span id="status" class="status"></span>
-
 </div>
-
 </section>
 
-<div
-  id="decisionBox"
-  class="decision-box"
->
-
-<div class="decision-title">
-DÉCISION IA
-</div>
-
-<div
-  id="decisionValue"
-  class="decision-value"
-></div>
-
+<div id="decisionBox" class="decision-box">
+<div class="decision-title">DÉCISION IA</div>
+<div id="decisionValue" class="decision-value"></div>
 </div>
 
 <section class="card">
-
 <h2>Rapport</h2>
-
-<div id="result" class="result">
-Le rapport apparaîtra ici.
-</div>
-
+<div id="result" class="result">Le rapport apparaîtra ici.</div>
 <br>
-
-<button id="downloadBtn">
-Télécharger le rapport PDF
-</button>
-
+<button id="downloadBtn">Télécharger le rapport PDF</button>
 </section>
 
 </main>
 
-<footer>
-ARC CONTROLATOR — Validation humaine obligatoire.
-</footer>
+<footer>ARC CONTROLATOR — Validation humaine obligatoire.</footer>
 
 <script>
-
 const $ = (id)=>document.getElementById(id);
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
 async function readTextFile(file){
-
   return new Promise((resolve,reject)=>{
-
     const r = new FileReader();
-
     r.onload = ()=>resolve(r.result || "");
-
     r.onerror = reject;
-
     r.readAsText(file);
-
   });
-
 }
 
 async function extractPdfTextAndImages(file,label){
-
   const arrayBuffer = await file.arrayBuffer();
 
   const pdf = await pdfjsLib.getDocument({
-    data: arrayBuffer
+    data:arrayBuffer
   }).promise;
 
   let text = "";
-
   const images = [];
 
-  const maxPages = Math.min(pdf.numPages,6);
+  const maxPages = Math.min(pdf.numPages,3);
 
   for(let i=1;i<=maxPages;i++){
-
     const page = await pdf.getPage(i);
 
     const content = await page.getTextContent();
@@ -345,21 +128,17 @@ async function extractPdfTextAndImages(file,label){
       .trim();
 
     if(strings){
-
       text += "\n\nPAGE "+i+"\n"+strings;
-
     }
 
     const viewport = page.getViewport({
-      scale:1.5
+      scale:1
     });
 
     const canvas = document.createElement("canvas");
-
     const ctx = canvas.getContext("2d");
 
     canvas.width = viewport.width;
-
     canvas.height = viewport.height;
 
     await page.render({
@@ -367,10 +146,7 @@ async function extractPdfTextAndImages(file,label){
       viewport
     }).promise;
 
-    const img = canvas.toDataURL(
-      "image/jpeg",
-      0.65
-    );
+    const img = canvas.toDataURL("image/jpeg",0.45);
 
     images.push({
       label:label+"_PAGE_"+i,
@@ -378,39 +154,29 @@ async function extractPdfTextAndImages(file,label){
       kind:"image",
       content:img
     });
-
   }
 
   return {
     text:text.trim(),
     images
   };
-
 }
 
 function compressImage(file){
-
   return new Promise((resolve,reject)=>{
-
     const img = new Image();
-
     const reader = new FileReader();
 
     reader.onload = e=>img.src=e.target.result;
-
     reader.onerror = reject;
 
     img.onload = ()=>{
-
       const canvas = document.createElement("canvas");
-
-      const maxW = 1400;
-
+      const maxW = 900;
       const scale = Math.min(1,maxW/img.width);
 
-      canvas.width = img.width * scale;
-
-      canvas.height = img.height * scale;
+      canvas.width = Math.round(img.width*scale);
+      canvas.height = Math.round(img.height*scale);
 
       const ctx = canvas.getContext("2d");
 
@@ -422,57 +188,36 @@ function compressImage(file){
         canvas.height
       );
 
-      const dataUrl = canvas.toDataURL(
-        "image/jpeg",
-        0.65
-      );
+      const dataUrl = canvas.toDataURL("image/jpeg",0.45);
 
       resolve(dataUrl);
-
     };
 
     img.onerror = reject;
-
     reader.readAsDataURL(file);
-
   });
-
 }
 
 async function prepareDocument(file,label){
-
   const name = file.name.toLowerCase();
-
   const type = file.type || "";
 
   if(name.endsWith(".pdf") || type.includes("pdf")){
+    const pdfData = await extractPdfTextAndImages(file,label);
 
-    const pdfData =
-      await extractPdfTextAndImages(
-        file,
-        label
-      );
-
-    if(
-      pdfData.text &&
-      pdfData.text.length > 80
-    ){
-
+    if(pdfData.text && pdfData.text.length > 80){
       return [{
         label,
         name:file.name,
         kind:"text",
         content:pdfData.text
       }];
-
     }
 
     return pdfData.images;
-
   }
 
   if(type.startsWith("image/")){
-
     const image = await compressImage(file);
 
     return [{
@@ -481,7 +226,6 @@ async function prepareDocument(file,label){
       kind:"image",
       content:image
     }];
-
   }
 
   const text = await readTextFile(file);
@@ -492,249 +236,169 @@ async function prepareDocument(file,label){
     kind:"text",
     content:text
   }];
-
 }
 
 $("analyzeBtn").addEventListener("click",async()=>{
-
   const files = {
-
     devis:$("devis").files[0],
-
     metrage:$("metrage").files[0],
-
     commande:$("commande").files[0],
-
     arc:$("arc").files[0]
-
   };
 
-  if(
-    !files.devis &&
-    !files.metrage &&
-    !files.commande &&
-    !files.arc
-  ){
-
+  if(!files.devis && !files.metrage && !files.commande && !files.arc){
     alert("Ajoute au moins un document.");
-
     return;
-
   }
 
-  $("status").textContent =
-    "Préparation...";
-
-  $("result").textContent =
-    "Préparation des documents...";
-
-  $("decisionBox").style.display =
-    "none";
-
+  $("status").textContent = "Préparation...";
+  $("result").textContent = "Préparation des documents...";
+  $("decisionBox").style.display = "none";
   $("analyzeBtn").disabled = true;
 
   try{
-
     const docs = [];
 
     if(files.devis){
-      docs.push(...(
-        await prepareDocument(
-          files.devis,
-          "DEVIS"
-        )
-      ));
+      docs.push(...(await prepareDocument(files.devis,"DEVIS")));
     }
 
     if(files.metrage){
-      docs.push(...(
-        await prepareDocument(
-          files.metrage,
-          "METRAGE"
-        )
-      ));
+      docs.push(...(await prepareDocument(files.metrage,"METRAGE")));
     }
 
     if(files.commande){
-      docs.push(...(
-        await prepareDocument(
-          files.commande,
-          "COMMANDE"
-        )
-      ));
+      docs.push(...(await prepareDocument(files.commande,"COMMANDE")));
     }
 
     if(files.arc){
-      docs.push(...(
-        await prepareDocument(
-          files.arc,
-          "ARC"
-        )
-      ));
+      docs.push(...(await prepareDocument(files.arc,"ARC")));
     }
 
     const payload = {
-
       mode:$("mode").value,
-
       consigne:$("consigne").value,
-
       docs
-
     };
 
-    $("status").textContent =
-      "Analyse en cours...";
+    const payloadSize = new Blob([
+      JSON.stringify(payload)
+    ]).size;
 
-    $("result").textContent =
-      "Analyse en cours...";
+    if(payloadSize > 2500000){
+      throw new Error("Dossier trop lourd. Limite actuelle : 3 pages PDF par document. Réduis les scans ou sépare l’analyse.");
+    }
 
-    const res = await fetch(
-      "/api/analyze",
-      {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify(payload)
-      }
-    );
+    $("status").textContent = "Analyse en cours...";
+    $("result").textContent = "Analyse en cours...";
+
+    const res = await fetch("/api/analyze",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(payload)
+    });
 
     const raw = await res.text();
 
     let data;
 
     try{
-
       data = JSON.parse(raw);
-
     }catch(e){
-
       throw new Error(raw);
-
     }
 
     if(!res.ok){
-
-      throw new Error(
-        data.error || "Erreur"
-      );
-
+      throw new Error(data.error || "Erreur");
     }
 
-    const report =
-      data.report || "Aucun rapport.";
+    const report = data.report || "Aucun rapport.";
 
     $("result").textContent = report;
+    $("status").textContent = "Analyse terminée.";
 
-    $("status").textContent =
-      "Analyse terminée.";
-
-    const upper =
-      report.toUpperCase();
+    const upper = report.toUpperCase();
 
     let decision = "";
 
-    if(upper.includes("FEU VERT")){
-      decision = "FEU VERT";
-    }else if(
-      upper.includes("BLOCAGE")
-    ){
+    if(upper.includes("BLOCAGE")){
       decision = "BLOCAGE";
-    }else if(
-      upper.includes("A VERIFIER")
-    ){
+    }else if(upper.includes("A VERIFIER")){
       decision = "A VERIFIER";
+    }else if(upper.includes("FEU VERT")){
+      decision = "FEU VERT";
     }
 
     if(decision){
-
-      $("decisionValue").textContent =
-        decision;
-
-      $("decisionBox").style.display =
-        "block";
-
+      $("decisionValue").textContent = decision;
+      $("decisionBox").style.display = "block";
     }
 
   }catch(err){
-
-    $("result").textContent =
-      "Erreur : "+err.message;
-
-    $("status").textContent =
-      "Erreur";
-
+    $("result").textContent = "Erreur : "+err.message;
+    $("status").textContent = "Erreur";
   }finally{
-
     $("analyzeBtn").disabled = false;
-
   }
-
 });
 
 $("downloadBtn").addEventListener("click",()=>{
+  const text = $("result").textContent;
 
-  const text =
-    $("result").textContent;
+  const safeText = text.replace(/[&<>"']/g, function(m){
+    return {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      "\"":"&quot;",
+      "'":"&#039;"
+    }[m];
+  });
 
-  const printWindow =
-    window.open("", "_blank");
+  const printWindow = window.open("", "_blank");
 
   printWindow.document.write(`
-
     <html>
-
       <head>
-
-        <title>
-          Rapport ARC CONTROLATOR
-        </title>
-
+        <title>Rapport ARC CONTROLATOR</title>
         <style>
-
           body{
             font-family:Arial,sans-serif;
             padding:30px;
             line-height:1.5;
             color:#111;
           }
-
           h1{
             color:#d4af37;
             border-bottom:3px solid #000;
             padding-bottom:10px;
           }
-
+          .decision{
+            font-size:28px;
+            font-weight:900;
+            border:3px solid #d4af37;
+            padding:15px;
+            margin-bottom:20px;
+          }
           pre{
             white-space:pre-wrap;
             font-size:13px;
           }
-
         </style>
-
       </head>
-
       <body>
-
         <h1>ARC CONTROLATOR</h1>
-
-        <pre>${text}</pre>
-
+        <pre>${safeText}</pre>
       </body>
-
     </html>
-
   `);
 
   printWindow.document.close();
-
   printWindow.print();
-
 });
-
 </script>
 
 </body>
 </html>
-```
