@@ -1,4 +1,3 @@
-```javascript id="x4m9qp"
 import OpenAI from "openai";
 
 const SYSTEM_PROMPT = `
