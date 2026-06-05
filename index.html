@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARC CONTROLATOR</title>
+<style>
+:root{--gold:#d4af37;--light:#f4f4f4}*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:#111}
+header{background:linear-gradient(135deg,#000,#171717);color:white;text-align:center;padding:34px 20px;border-bottom:5px solid var(--gold)}
+header h1{margin:0;color:var(--gold);letter-spacing:4px;font-size:34px}
+main{max-width:1100px;margin:26px auto;padding:0 18px}
+.card{background:white;border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+label{font-weight:700;display:block;margin-bottom:7px}
+input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;background:#fafafa;font-size:14px}
+button{background:#000;color:white;border:0;padding:14px 22px;border-radius:10px;border-bottom:4px solid var(--gold);font-weight:700;cursor:pointer;font-size:16px}
+button:disabled{opacity:.5}.status{font-weight:700;color:#333;margin-left:10px}
+.result{white-space:pre-wrap;background:#111;color:#f5f5f5;border-radius:12px;padding:20px;min-height:180px;line-height:1.45;overflow:auto}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+footer{text-align:center;color:#777;font-size:13px;padding:24px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}header h1{font-size:27px}}
+</style>
+</head>
+<body>
+<header><h1>ARC CONTROLATOR</h1><p>Contrôle intelligent — Devis → Métrage → Commande → ARC</p></header>
+<main>
+<section class="card">
+<h2>Contrôle dossier</h2>
+<p>Dépose les 4 documents. L’IA détecte les incohérences avant validation ARC.</p>
+<div class="grid">
+<div><label>1. Devis client</label><input id="devis" type="file" accept=".pdf,.png,.jpg,.jpeg,.txt,.csv"></div>
+<div><label>2. Fiche métrage</label><input id="metrage" type="file" accept=".pdf,.png,.jpg,.jpeg,.txt,.csv"></div>
+<div><label>3. Commande fournisseur</label><input id="commande" type="file" accept=".pdf,.png,.jpg,.jpeg,.txt,.csv"></div>
+<div><label>4. ARC fournisseur</label><input id="arc" type="file" accept=".pdf,.png,.jpg,.jpeg,.txt,.csv"></div>
+</div><br>
+<label>Niveau de contrôle</label>
+<select id="mode">
+<option>Contrôle complet</option><option>Contrôle dimensions uniquement</option><option>Contrôle options / couleurs / sens d’ouverture</option><option>Contrôle ARC avant validation</option>
+</select><br><br>
+<div class="actions"><button id="analyzeBtn">Contrôler le dossier</button><span id="status" class="status"></span></div>
+</section>
+<section class="card"><h2>Rapport</h2><div id="result" class="result">Le rapport apparaîtra ici.</div><br><button id="downloadBtn" disabled>Télécharger le rapport</button></section>
+</main>
+<footer>ARC CONTROLATOR — Outil d’aide au contrôle. Validation humaine obligatoire.</footer>
+<script>
+const $=(id)=>document.getElementById(id);
+async function fileToPayload(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve({name:file.name,type:file.type||"application/octet-stream",data:r.result.split(",")[1]});r.onerror=reject;r.readAsDataURL(file);});}
+$("analyzeBtn").addEventListener("click",async()=>{
+const files={devis:$("devis").files[0],metrage:$("metrage").files[0],commande:$("commande").files[0],arc:$("arc").files[0]};
+if(!files.devis||!files.metrage||!files.commande||!files.arc){alert("Ajoute les 4 documents : devis, métrage, commande et ARC.");return;}
+$("analyzeBtn").disabled=true;$("downloadBtn").disabled=true;$("status").textContent="Analyse en cours...";$("result").textContent="Analyse en cours...";
+try{
+const payload={mode:$("mode").value,files:{devis:await fileToPayload(files.devis),metrage:await fileToPayload(files.metrage),commande:await fileToPayload(files.commande),arc:await fileToPayload(files.arc)}};
+const res=await fetch("/api/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+const raw=await res.text();let data;try{data=JSON.parse(raw)}catch(e){throw new Error("Réponse serveur illisible : "+raw.slice(0,500))}
+if(!res.ok)throw new Error(data.error||"Erreur serveur.");
+$("result").textContent=data.report||"Aucun rapport généré.";$("downloadBtn").disabled=false;$("status").textContent="Analyse terminée.";
+}catch(err){$("result").textContent="Erreur : "+err.message;$("status").textContent="Erreur."}finally{$("analyzeBtn").disabled=false;}
+});
+$("downloadBtn").addEventListener("click",()=>{const text=$("result").textContent;const blob=new Blob([text],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="rapport_arc_controlator.txt";a.click();URL.revokeObjectURL(url);});
+</script>
+</body></html>
