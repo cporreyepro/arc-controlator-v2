@@ -471,29 +471,39 @@ $("downloadBtn").addEventListener("click",()=>{
 
   const text = $("result").textContent;
 
-  const blob = new Blob(
-    [text],
-    {
-      type:"text/plain;charset=utf-8"
-    }
-  );
+  const printWindow = window.open("", "_blank");
 
-  const url = URL.createObjectURL(blob);
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Rapport ARC CONTROLATOR</title>
+        <style>
+          body{
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            line-height: 1.5;
+            color: #111;
+          }
+          h1{
+            color:#d4af37;
+            border-bottom:3px solid #000;
+            padding-bottom:10px;
+          }
+          pre{
+            white-space: pre-wrap;
+            font-size: 13px;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>ARC CONTROLATOR</h1>
+        <pre>${text}</pre>
+      </body>
+    </html>
+  `);
 
-  const a = document.createElement("a");
+  printWindow.document.close();
 
-  a.href = url;
-
-  a.download = "rapport_arc_controlator.txt";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
+  printWindow.print();
 
 });
-
-</script>
-
-</body>
-</html>
-```
