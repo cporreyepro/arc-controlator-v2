@@ -5,279 +5,205 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ARC CONTROLATOR</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-
 :root{
-  --bg:#f5f3ee;
-  --panel:#ffffff;
-  --ink:#161616;
-  --muted:#6f6a5f;
-  --line:#e8e1d3;
-  --gold:#c9a227;
-  --gold-soft:#f2e7bd;
-  --black:#0d0d0d;
-  --green:#0f9f6e;
-  --red:#d93636;
-  --orange:#e79022;
-  --blue:#2563eb;
-  --radius:18px;
-  --shadow:0 20px 50px rgba(0,0,0,.10);
+  --bg:#f6f3ee;
+  --surface:#ffffff;
+  --surface-soft:#fbfaf7;
+  --text:#191816;
+  --muted:#77736b;
+  --line:#e7e0d4;
+  --black:#111111;
+  --gold:#b99755;
+  --gold-soft:#efe5d2;
+  --green:#1f8f55;
+  --red:#b42318;
+  --orange:#b76e00;
+  --shadow:0 20px 60px rgba(35,31,26,.08);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 body{
   margin:0;
-  font-family:Inter,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
+  font-family:"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background:
-    radial-gradient(circle at top left,rgba(201,162,39,.18),transparent 34%),
-    linear-gradient(180deg,#fbfaf7 0%,var(--bg) 55%,#eee8dc 100%);
-  color:var(--ink);
+    radial-gradient(circle at top left, rgba(185,151,85,.14), transparent 34%),
+    var(--bg);
+  color:var(--text);
 }
 
 header{
-  background:
-    radial-gradient(circle at top right,rgba(201,162,39,.28),transparent 28%),
-    linear-gradient(135deg,#070707,#171717 58%,#0a0a0a);
-  color:white;
-  padding:48px 20px 42px;
-  border-bottom:1px solid rgba(201,162,39,.65);
+  max-width:1160px;
+  margin:0 auto;
+  padding:42px 22px 24px;
+}
+
+.brand{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:38px;
+}
+
+.logo{
+  font-weight:800;
+  letter-spacing:.08em;
+  font-size:14px;
+}
+
+.powered{
+  font-size:13px;
+  color:var(--muted);
 }
 
 .hero{
-  max-width:1100px;
-  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
+  gap:24px;
+  align-items:end;
 }
 
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  background:rgba(201,162,39,.13);
-  border:1px solid rgba(201,162,39,.45);
-  color:#f6e8a7;
-  padding:8px 13px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:800;
-  letter-spacing:.5px;
-  text-transform:uppercase;
-}
-
-header h1{
-  margin:18px 0 12px;
-  color:white;
-  font-size:clamp(34px,5vw,62px);
-  line-height:1.02;
-  letter-spacing:-2px;
-  max-width:980px;
-}
-
-header h1 span{
-  color:var(--gold);
-}
-
-header p{
-  max-width:780px;
+h1{
   margin:0;
-  color:#e7e1d2;
-  font-size:18px;
+  max-width:780px;
+  font-size:clamp(38px,5vw,76px);
+  line-height:.94;
+  letter-spacing:-.06em;
+}
+
+.lead{
+  margin:0;
+  color:var(--muted);
+  font-size:17px;
   line-height:1.65;
 }
 
-.hero-points{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:24px;
-}
-
-.hero-point{
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.12);
-  padding:11px 14px;
-  border-radius:14px;
-  color:#f6f0df;
-  font-size:14px;
-  font-weight:700;
-}
-
 main{
-  max-width:1100px;
-  margin:30px auto;
-  padding:0 18px;
+  max-width:1160px;
+  margin:0 auto 34px;
+  padding:0 22px;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);
+  gap:22px;
+  align-items:start;
 }
 
 .card{
   background:rgba(255,255,255,.88);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(232,225,211,.95);
-  border-radius:var(--radius);
-  padding:26px;
-  margin-bottom:20px;
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:24px;
   box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
 }
+
+.card + .card{margin-top:18px;}
 
 .card-head{
   display:flex;
   justify-content:space-between;
+  gap:16px;
   align-items:flex-start;
-  gap:20px;
   margin-bottom:20px;
 }
 
 h2{
   margin:0;
-  font-size:25px;
-  letter-spacing:-.5px;
+  font-size:18px;
+  letter-spacing:-.02em;
 }
 
-.help{
-  margin:8px 0 0;
+.hint{
+  margin:6px 0 0;
   color:var(--muted);
+  font-size:13px;
   line-height:1.5;
-  font-size:15px;
 }
 
-.step-pill{
-  white-space:nowrap;
-  background:#111;
-  color:#f4df8a;
-  border:1px solid rgba(201,162,39,.6);
-  padding:9px 12px;
+.step{
+  min-width:34px;
+  height:34px;
   border-radius:999px;
+  display:grid;
+  place-items:center;
+  background:var(--black);
+  color:white;
   font-size:13px;
-  font-weight:900;
+  font-weight:700;
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;
+  gap:14px;
 }
 
-.upload-box{
+.file-block{
+  background:var(--surface-soft);
   border:1px solid var(--line);
-  border-radius:16px;
+  border-radius:18px;
   padding:16px;
-  background:linear-gradient(180deg,#fff,#fbfaf7);
-  transition:.2s ease;
-}
-
-.upload-box:hover{
-  transform:translateY(-2px);
-  border-color:var(--gold);
-  box-shadow:0 10px 25px rgba(201,162,39,.12);
 }
 
 label{
-  font-weight:900;
   display:block;
-  margin-bottom:7px;
-}
-
-.hint{
-  display:block;
-  margin-bottom:10px;
-  color:var(--muted);
   font-size:13px;
-  line-height:1.4;
+  font-weight:700;
+  margin-bottom:10px;
 }
 
-input,select,textarea{
+.file-desc{
+  margin:-4px 0 12px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.35;
+}
+
+input,textarea{
   width:100%;
-  padding:13px 14px;
   border:1px solid var(--line);
-  border-radius:12px;
+  border-radius:14px;
   background:#fff;
-  color:var(--ink);
-  font-size:15px;
-  outline:none;
-  transition:.2s ease;
-}
-
-input:focus,select:focus,textarea:focus{
-  border-color:var(--gold);
-  box-shadow:0 0 0 4px rgba(201,162,39,.15);
+  color:var(--text);
+  font:inherit;
+  font-size:14px;
 }
 
 input[type="file"]{
+  padding:10px;
+  cursor:pointer;
+}
+
+input[type="file"]::file-selector-button{
+  border:0;
+  border-radius:10px;
+  background:var(--black);
+  color:white;
+  padding:9px 12px;
+  margin-right:10px;
+  font-weight:700;
   cursor:pointer;
 }
 
 textarea{
-  min-height:95px;
+  min-height:120px;
   resize:vertical;
+  padding:15px;
+  line-height:1.55;
 }
 
-.control-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-  margin-top:18px;
-}
-
-button{
-  background:linear-gradient(135deg,#111,#000);
-  color:white;
-  border:0;
-  padding:15px 22px;
-  border-radius:14px;
-  border-bottom:4px solid var(--gold);
-  font-weight:900;
-  cursor:pointer;
-  font-size:16px;
-  transition:.2s ease;
-}
-
-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 12px 25px rgba(0,0,0,.18);
-}
-
-button:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-  transform:none;
-  box-shadow:none;
-}
-
-.secondary-btn{
-  background:white;
-  color:#111;
-  border:1px solid var(--line);
-  border-bottom:4px solid var(--gold-soft);
-}
-
-.status{
-  font-weight:900;
-  color:#3f3a30;
-  background:#f6f0df;
-  border:1px solid #eadca9;
-  padding:10px 12px;
-  border-radius:999px;
-  min-height:40px;
-  display:inline-flex;
-  align-items:center;
-}
-
-.result{
-  white-space:pre-wrap;
-  background:#101010;
-  color:#f7f3e8;
-  border:1px solid rgba(201,162,39,.28);
-  border-radius:16px;
-  padding:22px;
-  min-height:210px;
-  line-height:1.62;
-  overflow:auto;
-  font-size:15px;
-}
-
-.result.empty{
-  color:#bfb8a6;
+textarea:focus,input:focus{
+  outline:2px solid rgba(185,151,85,.32);
+  border-color:var(--gold);
 }
 
 .actions{
@@ -285,191 +211,223 @@ button:disabled{
   gap:12px;
   align-items:center;
   flex-wrap:wrap;
-  margin-top:20px;
+  margin-top:18px;
 }
 
-.decision-box{
+button{
+  appearance:none;
+  border:0;
+  border-radius:14px;
+  padding:14px 18px;
+  background:var(--black);
+  color:white;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+  transition:transform .15s ease, opacity .15s ease, box-shadow .15s ease;
+  box-shadow:0 12px 28px rgba(17,17,17,.16);
+}
+
+button:hover{transform:translateY(-1px);}
+button:disabled{opacity:.45; cursor:not-allowed; transform:none;}
+
+.secondary-button{
   background:white;
+  color:var(--black);
   border:1px solid var(--line);
-  border-left:8px solid var(--gold);
-  border-radius:18px;
-  padding:22px;
-  margin-bottom:20px;
+  box-shadow:none;
+}
+
+.status{
+  color:var(--muted);
+  font-size:13px;
+  font-weight:600;
+}
+
+.side-note{
+  background:var(--gold-soft);
+  border:1px solid rgba(185,151,85,.35);
+  border-radius:20px;
+  padding:18px;
+  color:#514125;
+  font-size:13px;
+  line-height:1.55;
+}
+
+.side-note strong{display:block; color:#2a2111; margin-bottom:6px;}
+
+.decision-box{
   display:none;
+  border-radius:26px;
+  padding:24px;
+  background:var(--surface);
+  border:1px solid var(--line);
   box-shadow:var(--shadow);
 }
 
 .decision-title{
-  font-size:13px;
-  font-weight:950;
   color:var(--muted);
-  letter-spacing:1.4px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.12em;
   text-transform:uppercase;
   margin-bottom:8px;
 }
 
 .decision-value{
-  font-size:38px;
+  font-size:36px;
   line-height:1;
-  font-weight:950;
+  font-weight:900;
+  letter-spacing:-.04em;
 }
 
-.decision-green{border-left-color:var(--green);}
-.decision-green .decision-value{color:var(--green);}
-.decision-red{border-left-color:var(--red);}
-.decision-red .decision-value{color:var(--red);}
-.decision-orange{border-left-color:var(--orange);}
-.decision-orange .decision-value{color:var(--orange);}
+.result{
+  white-space:pre-wrap;
+  background:#171614;
+  color:#f8f5ee;
+  border-radius:20px;
+  padding:22px;
+  min-height:360px;
+  line-height:1.65;
+  overflow:auto;
+  font-family:"Inter", system-ui, sans-serif;
+  font-size:14px;
+}
+
+.result.empty{color:#8f897f;}
 
 footer{
-  text-align:center;
-  color:#7b7366;
-  font-size:13px;
-  padding:28px 18px 34px;
+  max-width:1160px;
+  margin:0 auto;
+  padding:0 22px 30px;
+  color:var(--muted);
+  font-size:12px;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
-footer strong{
-  color:#111;
+@media(max-width:900px){
+  .hero,.layout{grid-template-columns:1fr;}
+  .brand{align-items:flex-start; flex-direction:column;}
 }
 
-@media(max-width:760px){
-  .grid,
-  .control-row{
-    grid-template-columns:1fr;
-  }
-
-  .card-head{
-    display:block;
-  }
-
-  .step-pill{
-    display:inline-flex;
-    margin-top:14px;
-  }
-
-  header{
-    padding:36px 18px;
-  }
+@media(max-width:720px){
+  header{padding-top:28px;}
+  .grid{grid-template-columns:1fr;}
+  .card{border-radius:20px; padding:18px;}
+  .result{min-height:260px;}
 }
-
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
 </head>
 
 <body>
-
 <header>
+  <div class="brand">
+    <div class="logo">ARC CONTROLATOR</div>
+    <div class="powered">Groupe GTZ</div>
+  </div>
+
   <div class="hero">
-    <div class="badge">Powered by Groupe GTZ</div>
-    <h1>ARC CONTROLATOR<br><span>L’inspecteur IA de vos commandes.</span></h1>
-    <p>
-      Comparez automatiquement le devis, la fiche de métrage, la commande fournisseur et l’ARC pour repérer les risques avant fabrication. Moins d’oublis, moins de SAV, plus de sérénité.
-    </p>
-    <div class="hero-points">
-      <div class="hero-point">✓ Devis → Métrage → Commande → ARC</div>
-      <div class="hero-point">✓ Détection des incohérences</div>
-      <div class="hero-point">✓ Rapport clair et exportable</div>
-    </div>
+    <h1>Contrôle documentaire avant fabrication.</h1>
+    <p class="lead">Un espace simple pour comparer devis, métrage, commande et ARC. L’objectif : repérer les écarts avant validation.</p>
   </div>
 </header>
 
 <main>
+  <div class="layout">
+    <div>
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Dossier à contrôler</h2>
+            <p class="hint">Ajoutez uniquement les documents utiles. Tous les champs ne sont pas obligatoires.</p>
+          </div>
+          <div class="step">1</div>
+        </div>
 
-<section class="card">
+        <div class="grid">
+          <div class="file-block">
+            <label for="devis">Devis client</label>
+            <p class="file-desc">Base commerciale du dossier.</p>
+            <input id="devis" type="file">
+          </div>
 
-<div class="card-head">
-  <div>
-    <h2>Inspection du dossier</h2>
-    <p class="help">Déposez vos documents. ARC Controlator les lit, les compare et vous remonte les anomalies à corriger avant validation.</p>
+          <div class="file-block">
+            <label for="metrage">Fiche métrage</label>
+            <p class="file-desc">Relevé technique du chantier.</p>
+            <input id="metrage" type="file">
+          </div>
+
+          <div class="file-block">
+            <label for="commande">Commande fournisseur</label>
+            <p class="file-desc">Document transmis au fabricant.</p>
+            <input id="commande" type="file">
+          </div>
+
+          <div class="file-block">
+            <label for="arc">ARC fournisseur</label>
+            <p class="file-desc">Confirmation avant production.</p>
+            <input id="arc" type="file">
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Focus d’analyse</h2>
+            <p class="hint">Optionnel. Utilisez ce champ pour limiter ou préciser le contrôle.</p>
+          </div>
+          <div class="step">2</div>
+        </div>
+
+        <textarea id="consigne" placeholder="Exemple : contrôler uniquement les menuiseries extérieures. Ne pas tenir compte des volets. Vérifier en priorité les dimensions et les coloris."></textarea>
+        <input id="mode" type="hidden" value="Contrôle documentaire avec focus libre">
+
+        <div class="actions">
+          <button id="analyzeBtn">Contrôler le dossier</button>
+          <span id="status" class="status"></span>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <div id="decisionBox" class="decision-box">
+        <div class="decision-title">Décision</div>
+        <div id="decisionValue" class="decision-value"></div>
+      </div>
+
+      <div class="side-note" style="margin-top:18px;">
+        <strong>Lecture conseillée</strong>
+        Le rapport sert d’aide au contrôle. La décision finale doit rester humaine, surtout avant commande ou validation fournisseur.
+      </div>
+    </aside>
   </div>
-  <div class="step-pill">Étape 1 / Charger les pièces</div>
-</div>
 
-<div class="grid">
+  <section class="card" style="margin-top:22px;">
+    <div class="card-head">
+      <div>
+        <h2>Rapport</h2>
+        <p class="hint">Les écarts, points à vérifier et actions proposées apparaîtront ici.</p>
+      </div>
+      <div class="step">3</div>
+    </div>
 
-<div class="upload-box">
-<label>1. Devis client</label>
-<span class="hint">Le document signé ou transmis au client.</span>
-<input id="devis" type="file">
-</div>
+    <div id="result" class="result empty">Aucun contrôle lancé.</div>
 
-<div class="upload-box">
-<label>2. Fiche de métrage</label>
-<span class="hint">Les relevés techniques pris sur chantier.</span>
-<input id="metrage" type="file">
-</div>
-
-<div class="upload-box">
-<label>3. Commande fournisseur</label>
-<span class="hint">La commande préparée avant envoi ou validation.</span>
-<input id="commande" type="file">
-</div>
-
-<div class="upload-box">
-<label>4. ARC fournisseur</label>
-<span class="hint">L’accusé de réception à contrôler avant fabrication.</span>
-<input id="arc" type="file">
-</div>
-
-</div>
-
-<div class="control-row">
-  <div>
-    <label>Focus d’analyse facultatif</label>
-    <textarea
-      id="consigne"
-      placeholder="Exemple : vérifier uniquement les fenêtres, ignorer les volets, contrôler seulement les coloris RAL."
-    ></textarea>
-  </div>
-
-  <div>
-    <label>Intensité du contrôle</label>
-    <select id="mode">
-      <option>Contrôle complet recommandé</option>
-      <option>Contrôle dimensions uniquement</option>
-      <option>Contrôle options / couleurs / sens d’ouverture</option>
-      <option>Contrôle ARC avant validation</option>
-    </select>
-    <p class="help">Le contrôle complet est conseillé pour sécuriser une commande avant fabrication.</p>
-  </div>
-</div>
-
-<div class="actions">
-  <button id="analyzeBtn">Lancer l’inspection IA</button>
-  <span id="status" class="status">En attente des documents</span>
-</div>
-
-</section>
-
-<div id="decisionBox" class="decision-box">
-  <div class="decision-title">Verdict ARC Controlator</div>
-  <div id="decisionValue" class="decision-value"></div>
-</div>
-
-<section class="card">
-
-<div class="card-head">
-  <div>
-    <h2>Rapport d’inspection</h2>
-    <p class="help">Les anomalies, points de vigilance et actions recommandées apparaîtront ici après analyse.</p>
-  </div>
-  <div class="step-pill">Étape 2 / Décider</div>
-</div>
-
-<div id="result" class="result empty">Votre rapport apparaîtra ici. Ajoutez vos documents puis lancez l’inspection IA.</div>
-
-<div class="actions">
-  <button id="downloadBtn" class="secondary-btn">Exporter le rapport PDF</button>
-</div>
-
-</section>
-
+    <div class="actions">
+      <button id="downloadBtn" class="secondary-button">Exporter le rapport PDF</button>
+    </div>
+  </section>
 </main>
 
 <footer>
-<strong>ARC Controlator assiste le contrôle qualité.</strong> La validation finale reste obligatoire par un responsable humain.
+  <span>ARC CONTROLATOR</span>
+  <span>Validation humaine obligatoire.</span>
 </footer>
 
 <script>
@@ -727,7 +685,7 @@ function colorizeReport(report){
 
     /FEU VERT/g,
 
-    '<span style="color:#20d49b;font-weight:950;">FEU VERT</span>'
+    '<span style="color:#00c853;font-weight:900;">FEU VERT</span>'
 
   );
 
@@ -735,7 +693,7 @@ function colorizeReport(report){
 
     /BLOCAGE/g,
 
-    '<span style="color:#ff5a5a;font-weight:950;">BLOCAGE</span>'
+    '<span style="color:#d50000;font-weight:900;">BLOCAGE</span>'
 
   );
 
@@ -743,7 +701,7 @@ function colorizeReport(report){
 
     /A VERIFIER/g,
 
-    '<span style="color:#ffb020;font-weight:950;">A VERIFIER</span>'
+    '<span style="color:#ff9800;font-weight:900;">A VERIFIER</span>'
 
   );
 
@@ -751,7 +709,7 @@ function colorizeReport(report){
 
     /Aucune incohérence détectée/g,
 
-    '<span style="color:#20d49b;font-weight:800;">Aucune incohérence détectée</span>'
+    '<span style="color:#00c853;font-weight:700;">Aucune incohérence détectée</span>'
 
   );
 
@@ -759,7 +717,7 @@ function colorizeReport(report){
 
     /INCOHERENCES/g,
 
-    '<span style="color:#ff5a5a;font-weight:950;">INCOHERENCES</span>'
+    '<span style="color:#d50000;font-weight:900;">INCOHERENCES</span>'
 
   );
 
@@ -767,7 +725,7 @@ function colorizeReport(report){
 
     /POINTS A VERIFIER/g,
 
-    '<span style="color:#ffb020;font-weight:950;">POINTS A VERIFIER</span>'
+    '<span style="color:#ff9800;font-weight:900;">POINTS A VERIFIER</span>'
 
   );
 
@@ -775,44 +733,12 @@ function colorizeReport(report){
 
     /ACTION/g,
 
-    '<span style="color:#7fb2ff;font-weight:950;">ACTION</span>'
+    '<span style="color:#2196f3;font-weight:900;">ACTION</span>'
 
   );
 
   return safe;
 
-}
-
-const loadingMessages = [
-  "Lecture des documents...",
-  "Comparaison devis / métrage...",
-  "Contrôle des dimensions...",
-  "Vérification des coloris et options...",
-  "Analyse de l’ARC fournisseur...",
-  "Recherche des anomalies...",
-  "Génération du rapport..."
-];
-
-let loadingTimer = null;
-let loadingIndex = 0;
-
-function startLoading(){
-  loadingIndex = 0;
-  $("status").textContent = loadingMessages[0];
-  $("result").classList.remove("empty");
-  $("result").innerHTML = loadingMessages[0];
-  loadingTimer = setInterval(()=>{
-    loadingIndex = (loadingIndex + 1) % loadingMessages.length;
-    $("status").textContent = loadingMessages[loadingIndex];
-    $("result").innerHTML = loadingMessages[loadingIndex];
-  },1400);
-}
-
-function stopLoading(){
-  if(loadingTimer){
-    clearInterval(loadingTimer);
-    loadingTimer = null;
-  }
 }
 
 $("analyzeBtn").addEventListener("click",async()=>{
@@ -837,7 +763,7 @@ $("analyzeBtn").addEventListener("click",async()=>{
   ){
 
     alert(
-      "Ajoute au moins un document pour lancer l’inspection."
+      "Ajoute au moins un document à contrôler."
     );
 
     return;
@@ -845,17 +771,14 @@ $("analyzeBtn").addEventListener("click",async()=>{
   }
 
   $("status").textContent =
-    "Préparation du dossier...";
+    "Préparation du dossier";
 
   $("result").classList.remove("empty");
   $("result").innerHTML =
-    "Préparation des documents...";
+    "Préparation des documents";
 
   $("decisionBox").style.display =
     "none";
-
-  $("decisionBox").className =
-    "decision-box";
 
   $("analyzeBtn").disabled = true;
 
@@ -938,7 +861,11 @@ $("analyzeBtn").addEventListener("click",async()=>{
 
     }
 
-    startLoading();
+    $("status").textContent =
+      "Analyse en cours";
+
+    $("result").innerHTML =
+      "Analyse en cours";
 
     const res = await fetch(
       "/api/analyze",
@@ -973,8 +900,6 @@ $("analyzeBtn").addEventListener("click",async()=>{
 
     }
 
-    stopLoading();
-
     const report =
       data.report || "Aucun rapport.";
 
@@ -982,34 +907,30 @@ $("analyzeBtn").addEventListener("click",async()=>{
       colorizeReport(report);
 
     $("status").textContent =
-      "Inspection terminée";
+      "Analyse terminée";
 
     const upper =
       report.toUpperCase();
 
     let decision = "";
-    let decisionClass = "";
 
     if(
       upper.includes("BLOCAGE")
     ){
 
       decision = "BLOCAGE";
-      decisionClass = "decision-red";
 
     }else if(
       upper.includes("A VERIFIER")
     ){
 
-      decision = "À VÉRIFIER";
-      decisionClass = "decision-orange";
+      decision = "A VERIFIER";
 
     }else if(
       upper.includes("FEU VERT")
     ){
 
       decision = "FEU VERT";
-      decisionClass = "decision-green";
 
     }
 
@@ -1018,17 +939,12 @@ $("analyzeBtn").addEventListener("click",async()=>{
       $("decisionValue").textContent =
         decision;
 
-      $("decisionBox").className =
-        "decision-box " + decisionClass;
-
       $("decisionBox").style.display =
         "block";
 
     }
 
   }catch(err){
-
-    stopLoading();
 
     $("result").innerHTML =
       "Erreur : "+err.message;
@@ -1065,16 +981,16 @@ $("downloadBtn").addEventListener("click",()=>{
         <style>
 
           body{
-            font-family:Inter,Segoe UI,Arial,sans-serif;
-            padding:34px;
-            line-height:1.55;
+            font-family:Arial,sans-serif;
+            padding:30px;
+            line-height:1.5;
             color:#111;
           }
 
           h1{
-            color:#111;
-            border-bottom:4px solid #c9a227;
-            padding-bottom:12px;
+            color:#d4af37;
+            border-bottom:3px solid #000;
+            padding-bottom:10px;
           }
 
           pre{
@@ -1088,7 +1004,7 @@ $("downloadBtn").addEventListener("click",()=>{
 
       <body>
 
-        <h1>ARC CONTROLATOR — Rapport d’inspection</h1>
+        <h1>ARC CONTROLATOR</h1>
 
         <pre>${text}</pre>
 
@@ -1105,6 +1021,5 @@ $("downloadBtn").addEventListener("click",()=>{
 });
 
 </script>
-
 </body>
 </html>
