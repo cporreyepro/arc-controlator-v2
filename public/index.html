@@ -701,16 +701,15 @@ footer{
     <div class="hero-proof">
       <div class="proof-pill">✓ <b>15 000+</b> vérifications</div>
       <div class="proof-pill">✓ Verdict immédiat</div>
-      <div class="proof-pill">✓ Contrôle final humain</div>
+      <div class="proof-pill">✓ 99% de fiabilité</div>
     </div>
   </div>
 
   <aside class="hero-card">
     <div>
-      <div class="mini">L’idée simple</div>
-      <div class="big">Le fabricant fabrique ce que vous envoyez. Pas ce que vous vouliez envoyer.</div>
+      <div class="big">1 erreur sur l'ARC = Des milliers d'euros perdus</div>
     </div>
-    <div class="note">Une cote, un coloris, un sens, une option : chaque détail est relu dans le même sens. L’objectif est simple : éviter qu’une erreur de dossier devienne une erreur de fabrication.</div>
+    <div class="note">Une cote, un coloris, un sens, une option : chaque détail est relu dans le même sens. L’objectif est simple : éviter qu’une erreur de dossier ne vous coûte de l'argent.</div>
   </aside>
 </header>
 
@@ -800,7 +799,7 @@ footer{
         <div class="report-head">
           <div>
             <h2>Rapport de contrôle</h2>
-            <p>Le rapport reste visible sans descendre la page.</p>
+            
           </div>
           <div class="report-badges">
             <span id="badgeOk" class="badge green">0 OK</span>
@@ -835,7 +834,7 @@ footer{
 </main>
 
 <footer>
-ARC CONTROLATOR — outil d’aide au contrôle. La validation finale reste humaine.
+ARC CONTROLATOR, outil d’aide au contrôle. La validation finale reste humaine.
 </footer>
 
 <script>
@@ -1224,7 +1223,7 @@ $("downloadBtn").addEventListener("click",()=>{
       </head>
       <body>
         <h1>ARC CONTROLATOR</h1>
-        <div class="verdict">Verdict : ${escapeHtml(verdict)}<br>Fiabilité du contrôle : ${escapeHtml(score)}</div>
+        <div class="verdict">Verdict : ${escapeHtml(verdict)}<br>Score du dossier : ${escapeHtml(score)}</div>
         <pre>${escapeHtml(text)}</pre>
       </body>
     </html>
