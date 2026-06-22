@@ -4,680 +4,472 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ARC CONTROLATOR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#f6f1e8;
-  --ink:#17140f;
-  --muted:#746b5f;
-  --line:#e8ddcd;
-  --paper:#fffaf2;
-  --card:#ffffff;
-  --black:#11100d;
-  --gold:#c8892b;
-  --gold-dark:#72470f;
-  --green:#168a4a;
-  --green-bg:#e7f8ed;
-  --green-line:#97dfb3;
-  --red:#b3261e;
-  --red-bg:#fde9e7;
-  --red-line:#f1aaa4;
-  --orange:#c46d10;
-  --orange-bg:#fff1dc;
-  --orange-line:#f0bd72;
-  --blue:#276b9f;
-  --blue-bg:#eaf4fb;
-  --shadow:0 24px 60px rgba(48,35,18,.10);
-  --soft-shadow:0 14px 35px rgba(48,35,18,.08);
+  --black:#090908;
+  --ink:#111111;
+  --muted:#74716a;
+  --soft:#f7f4ee;
+  --cream:#fbf8f1;
+  --line:#e9e2d6;
+  --gold:#b88739;
+  --gold-soft:#f3ead9;
+  --green:#128447;
+  --green-bg:#e8f7ee;
+  --orange:#c66b13;
+  --orange-bg:#fff0d9;
+  --red:#b42318;
+  --red-bg:#fde8e5;
 }
 
 *{box-sizing:border-box;}
-
 html{scroll-behavior:smooth;}
-
 body{
   margin:0;
-  font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
-  background:
-    radial-gradient(circle at top left, rgba(200,137,43,.20), transparent 32%),
-    radial-gradient(circle at top right, rgba(17,16,13,.06), transparent 28%),
-    linear-gradient(180deg,#fbf7ef 0%,#f1eadf 100%);
+  font-family:Manrope,Arial,sans-serif;
+  background:#fff;
   color:var(--ink);
 }
-
 button,input,textarea{font:inherit;}
 
+.page{
+  max-width:1220px;
+  margin:0 auto;
+  padding:0 28px;
+}
+
 .topbar{
-  max-width:1240px;
-  margin:0 auto;
-  padding:20px 22px 0;
-}
-
-.brand{
+  height:78px;
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  align-items:center;
-  gap:18px;
-  color:var(--muted);
-  font-size:12px;
-  letter-spacing:.11em;
-  text-transform:uppercase;
-}
-
-.brand strong{
-  color:var(--ink);
-  letter-spacing:.16em;
-  font-weight:900;
-}
-
-.hero{
-  max-width:1240px;
-  margin:0 auto;
-  padding:38px 22px 24px;
-  display:grid;
-  grid-template-columns:1fr 420px;
-  gap:24px;
-  align-items:stretch;
-}
-
-.hero-main{
-  min-height:265px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-
-.hero-kicker{
-  display:inline-flex;
-  width:max-content;
-  align-items:center;
-  gap:8px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:999px;
-  padding:8px 12px;
-  font-size:12px;
-  color:#5e503d;
-  font-weight:850;
-  box-shadow:var(--soft-shadow);
-}
-
-.hero-kicker span{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--green);
-}
-
-.hero h1{
-  margin:18px 0 0;
-  max-width:760px;
-  font-size:clamp(44px,6.3vw,82px);
-  line-height:.92;
-  letter-spacing:-.07em;
-  font-weight:950;
-}
-
-.hero p{
-  margin:20px 0 0;
-  max-width:740px;
-  font-size:18px;
-  line-height:1.55;
-  color:#494338;
-}
-
-.hero-proof{
-  margin-top:20px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.proof-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.76);
-  border-radius:999px;
-  padding:10px 13px;
-  color:#453d31;
-  font-weight:800;
-  font-size:13px;
-}
-
-.proof-pill b{color:var(--gold-dark);}
-
-.hero-card{
-  background:var(--black);
-  color:#fff8ec;
-  border-radius:32px;
-  padding:28px;
-  box-shadow:var(--shadow);
-  min-height:265px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  position:relative;
-  overflow:hidden;
-}
-
-.hero-card:before{
-  content:"";
-  position:absolute;
-  width:220px;
-  height:220px;
-  border-radius:50%;
-  right:-90px;
-  top:-90px;
-  background:rgba(200,137,43,.26);
-}
-
-.hero-card .mini{
-  color:#d8c4a5;
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.13em;
-  font-weight:900;
-  position:relative;
-}
-
-.hero-card .big{
-  margin-top:18px;
-  font-size:32px;
-  line-height:1.04;
-  font-weight:950;
-  letter-spacing:-.05em;
-  position:relative;
-}
-
-.hero-card .note{
-  margin-top:20px;
-  color:#dccab0;
-  line-height:1.48;
-  position:relative;
-}
-
-main{
-  max-width:1240px;
-  margin:0 auto 38px;
-  padding:0 22px;
-}
-
-.app-grid{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(380px,470px);
-  gap:22px;
-  align-items:start;
-}
-
-.panel{
-  background:rgba(255,250,242,.92);
-  border:1px solid rgba(232,221,205,.98);
-  border-radius:32px;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-}
-
-.panel-head{
-  padding:22px 24px 17px;
   border-bottom:1px solid var(--line);
+}
+.logo{
   display:flex;
-  justify-content:space-between;
-  gap:16px;
-  align-items:flex-start;
+  align-items:center;
+  gap:12px;
+  font-weight:800;
+  letter-spacing:-.04em;
+  font-size:20px;
 }
-
-.panel-head h2{
-  margin:0;
-  font-size:23px;
-  letter-spacing:-.035em;
-}
-
-.panel-head p{
-  margin:7px 0 0;
-  color:var(--muted);
-  line-height:1.42;
-  font-size:14px;
-}
-
-.counter{
-  white-space:nowrap;
-  background:#f0e5d5;
-  color:#5f4320;
-  border:1px solid #e2d0b7;
-  border-radius:999px;
-  padding:8px 12px;
-  font-weight:850;
-  font-size:13px;
-}
-
-.drop-grid{
-  padding:22px;
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:14px;
-}
-
-.file-card{
-  position:relative;
-  display:block;
-  min-height:165px;
-  background:#fff;
-  border:1.5px dashed #d7c8b5;
-  border-radius:25px;
-  padding:19px;
-  cursor:pointer;
-  transition:.18s ease;
-}
-
-.file-card:hover{
-  border-color:var(--gold);
-  transform:translateY(-2px);
-  box-shadow:0 14px 28px rgba(60,42,20,.08);
-}
-
-.file-card.has-file{
-  border-style:solid;
-  border-color:#b98a42;
-  background:#fff8ea;
-}
-
-.file-card input{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  cursor:pointer;
-}
-
-.file-number{
-  width:35px;
-  height:35px;
+.logo-mark{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:var(--black);
   display:grid;
   place-items:center;
-  border-radius:13px;
-  background:#f1e5d5;
-  color:#6f4515;
-  font-weight:950;
+  color:#fff;
+  font-size:15px;
 }
-
-.file-title{
-  margin-top:18px;
-  display:block;
-  font-size:20px;
-  line-height:1.08;
-  letter-spacing:-.04em;
-  font-weight:900;
-}
-
-.file-help{
-  margin-top:8px;
-  display:block;
+.powered{
+  font-size:12px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
   color:var(--muted);
-  line-height:1.35;
-  font-size:13px;
-}
-
-.file-name{
-  margin-top:17px;
-  display:block;
-  max-width:100%;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  color:#8b5d20;
-  font-weight:850;
-  font-size:13px;
-}
-
-.file-name.empty{
-  color:#a49a8b;
   font-weight:700;
 }
 
-.focus-zone{
-  padding:0 22px 22px;
+.hero{
+  padding:58px 0 34px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 360px;
+  gap:50px;
+  align-items:end;
 }
-
-.focus-zone label{
-  display:block;
-  font-weight:900;
-  margin-bottom:8px;
-  letter-spacing:-.02em;
-}
-
-.focus-zone textarea{
-  width:100%;
-  min-height:108px;
-  border:1px solid var(--line);
-  border-radius:22px;
-  background:#fff;
-  color:var(--ink);
-  padding:17px;
-  resize:vertical;
-  outline:none;
-  line-height:1.45;
-}
-
-.focus-zone textarea:focus{
-  border-color:var(--gold);
-  box-shadow:0 0 0 4px rgba(200,137,43,.14);
-}
-
-.action-zone{
-  padding:0 22px 24px;
-  display:flex;
-  gap:14px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
-.primary-btn{
-  min-height:58px;
-  padding:0 24px;
-  border:0;
-  border-radius:18px;
-  background:var(--black);
-  color:#fff8ec;
-  font-weight:950;
-  font-size:16px;
-  cursor:pointer;
-  box-shadow:0 12px 24px rgba(17,16,13,.16);
-  transition:.18s ease;
-}
-
-.primary-btn:hover{transform:translateY(-1px);}
-.primary-btn:disabled{opacity:.55;cursor:not-allowed;transform:none;}
-
-.status{
-  min-height:24px;
-  color:#6b6257;
+.eyebrow{
+  margin:0 0 16px;
+  color:var(--gold);
+  font-size:13px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
   font-weight:800;
 }
-
-.side-panel{
-  display:grid;
-  gap:16px;
-  position:sticky;
-  top:18px;
+h1{
+  margin:0;
+  max-width:760px;
+  font-size:clamp(54px,7.4vw,96px);
+  line-height:.88;
+  letter-spacing:-.085em;
+  font-weight:800;
 }
-
-.decision-box{
-  background:#fff;
+.hero-text{
+  margin:24px 0 0;
+  max-width:690px;
+  color:#3d3a35;
+  font-size:18px;
+  line-height:1.6;
+}
+.hero-text strong{color:#111;font-weight:800;}
+.hero-actions{
+  margin-top:30px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.hero-pill{
   border:1px solid var(--line);
-  border-radius:32px;
-  padding:23px;
-  box-shadow:var(--shadow);
-  transition:.2s ease;
-}
-
-.decision-box.waiting{
+  border-radius:999px;
+  padding:11px 15px;
+  color:#3c3934;
   background:#fff;
+  font-size:13px;
+  font-weight:800;
 }
-
-.decision-box.valid{
-  background:var(--green-bg);
-  border-color:var(--green-line);
+.hero-pill b{color:var(--gold);}
+.hero-aside{
+  border-left:1px solid var(--line);
+  padding-left:30px;
 }
-
-.decision-box.warning{
-  background:var(--orange-bg);
-  border-color:var(--orange-line);
+.aside-number{
+  font-size:72px;
+  line-height:1;
+  letter-spacing:-.08em;
+  font-weight:800;
+  color:var(--black);
 }
-
-.decision-box.blocked{
-  background:var(--red-bg);
-  border-color:var(--red-line);
+.aside-title{
+  margin-top:12px;
+  font-size:20px;
+  line-height:1.14;
+  letter-spacing:-.045em;
+  font-weight:800;
 }
-
-.decision-title{
+.aside-note{
+  margin-top:12px;
   color:var(--muted);
-  font-size:12px;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-  font-weight:950;
+  font-size:14px;
+  line-height:1.55;
 }
 
-.decision-main{
+.workspace{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 390px;
+  gap:38px;
+  padding:18px 0 58px;
+  align-items:start;
+}
+.section-title{
   display:flex;
   align-items:center;
-  gap:14px;
-  margin-top:12px;
+  justify-content:space-between;
+  gap:18px;
+  padding:18px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.section-title h2{
+  margin:0;
+  font-size:15px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  font-weight:800;
+}
+.section-title p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:600;
+}
+.counter{
+  color:var(--gold);
+  font-size:13px;
+  font-weight:800;
+  white-space:nowrap;
 }
 
-.decision-icon{
-  width:68px;
-  height:68px;
-  border-radius:24px;
+.upload-list{
+  display:grid;
+  gap:0;
+}
+.file-card{
+  position:relative;
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr) auto;
+  gap:18px;
+  align-items:center;
+  min-height:94px;
+  padding:21px 0;
+  border-bottom:1px solid var(--line);
+  cursor:pointer;
+  transition:.18s ease;
+}
+.file-card:hover{background:linear-gradient(90deg,rgba(184,135,57,.07),transparent);padding-left:12px;padding-right:12px;}
+.file-card input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.file-number{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--soft);
+  color:#111;
   display:grid;
   place-items:center;
-  background:#f4eadb;
-  font-size:34px;
-  flex:none;
+  font-weight:800;
 }
-
-.decision-box.valid .decision-icon{background:#c9f0d8;color:var(--green);}
-.decision-box.warning .decision-icon{background:#ffe0ab;color:var(--orange);}
-.decision-box.blocked .decision-icon{background:#ffc8c3;color:var(--red);}
-
-.decision-value{
-  font-size:33px;
-  line-height:.95;
+.file-card.has-file .file-number{background:var(--black);color:#fff;}
+.file-title{
+  display:block;
+  font-size:22px;
   letter-spacing:-.055em;
-  font-weight:1000;
+  line-height:1.05;
+  font-weight:800;
 }
-
-.decision-subtitle{
-  margin-top:12px;
-  color:#544b3f;
-  line-height:1.42;
-  font-weight:750;
+.file-help{
+  display:block;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:600;
 }
+.file-name{
+  position:relative;
+  z-index:1;
+  max-width:220px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:9px 12px;
+  font-size:12px;
+  font-weight:800;
+  color:var(--gold);
+  background:#fff;
+}
+.file-name.empty{color:#827d73;background:var(--cream);}
 
-.score-row{
-  margin-top:19px;
+.instructions{
+  margin-top:34px;
+}
+.instructions label{
+  display:block;
+  margin-bottom:12px;
+  font-size:15px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  font-weight:800;
+}
+.instructions textarea{
+  width:100%;
+  min-height:126px;
+  border:1px solid var(--line);
+  border-radius:0;
+  background:var(--cream);
+  padding:18px;
+  resize:vertical;
+  outline:none;
+  line-height:1.55;
+  color:#111;
+}
+.instructions textarea:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 4px rgba(184,135,57,.12);
+  background:#fff;
+}
+.action-zone{
+  margin-top:22px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.primary-btn{
+  min-height:58px;
+  border:0;
+  border-radius:999px;
+  background:var(--black);
+  color:#fff;
+  padding:0 28px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:none;
+  transition:.16s ease;
+}
+.primary-btn:hover{transform:translateY(-1px);background:#1c1a17;}
+.primary-btn:disabled{opacity:.55;cursor:not-allowed;transform:none;}
+.status{color:var(--muted);font-size:13px;font-weight:700;}
+
+.side-panel{
+  position:sticky;
+  top:22px;
   display:grid;
-  gap:8px;
+  gap:16px;
 }
-
+.decision-box{
+  min-height:260px;
+  padding:28px;
+  background:var(--soft);
+  border:1px solid var(--line);
+  transition:.2s ease;
+}
+.decision-box.valid{background:var(--green-bg);border-color:rgba(18,132,71,.28);}
+.decision-box.warning{background:var(--orange-bg);border-color:rgba(198,107,19,.30);}
+.decision-box.blocked{background:var(--red-bg);border-color:rgba(180,35,24,.30);}
+.decision-title{
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  font-weight:800;
+  color:#615d54;
+}
+.decision-main{margin-top:24px;}
+.decision-icon{
+  width:76px;
+  height:76px;
+  border-radius:50%;
+  background:#fff;
+  display:grid;
+  place-items:center;
+  font-size:40px;
+  color:#111;
+  margin-bottom:22px;
+}
+.decision-box.valid .decision-icon{color:var(--green);}
+.decision-box.warning .decision-icon{color:var(--orange);}
+.decision-box.blocked .decision-icon{color:var(--red);}
+.decision-value{
+  font-size:38px;
+  line-height:.95;
+  letter-spacing:-.07em;
+  font-weight:800;
+}
+.decision-subtitle{
+  margin-top:14px;
+  color:#454039;
+  line-height:1.48;
+  font-weight:700;
+  font-size:14px;
+}
+.score-row{margin-top:26px;}
 .score-head{
   display:flex;
   justify-content:space-between;
-  gap:14px;
-  color:#4e4539;
-  font-size:13px;
-  font-weight:900;
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:800;
+  color:#615d54;
 }
-
 .score-bar{
-  height:13px;
+  margin-top:10px;
+  height:8px;
+  background:rgba(0,0,0,.12);
   border-radius:999px;
-  background:rgba(17,16,13,.10);
   overflow:hidden;
 }
-
-.score-fill{
-  height:100%;
-  width:0%;
-  border-radius:999px;
-  background:#9b907f;
-  transition:.4s ease;
-}
-
+.score-fill{height:100%;width:0%;background:#111;transition:.4s ease;}
 .decision-box.valid .score-fill{background:var(--green);}
 .decision-box.warning .score-fill{background:var(--orange);}
 .decision-box.blocked .score-fill{background:var(--red);}
-
 .metrics{
+  margin-top:18px;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:18px;
+  gap:1px;
+  background:rgba(0,0,0,.10);
 }
-
-.metric{
-  background:rgba(255,255,255,.65);
-  border:1px solid rgba(255,255,255,.72);
-  border-radius:18px;
-  padding:12px 10px;
-}
-
-.metric b{
-  display:block;
-  font-size:19px;
-  letter-spacing:-.04em;
-}
-
-.metric span{
-  display:block;
-  margin-top:3px;
-  color:#6d6255;
-  font-size:11px;
-  font-weight:850;
-  text-transform:uppercase;
-  letter-spacing:.05em;
-}
+.metric{background:rgba(255,255,255,.56);padding:13px 10px;}
+.metric b{display:block;font-size:17px;letter-spacing:-.04em;}
+.metric span{display:block;margin-top:3px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#68635a;font-weight:800;}
 
 .report-panel{
-  background:#fff;
   border:1px solid var(--line);
-  border-radius:32px;
-  box-shadow:var(--shadow);
-  overflow:hidden;
+  background:#fff;
 }
-
 .report-head{
-  padding:19px 21px 15px;
-  border-bottom:1px solid var(--line);
+  padding:19px 20px;
   display:flex;
-  justify-content:space-between;
-  gap:14px;
   align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  border-bottom:1px solid var(--line);
 }
-
 .report-head h2{
   margin:0;
-  font-size:21px;
-  letter-spacing:-.035em;
+  font-size:15px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  font-weight:800;
 }
-
-.report-head p{
-  margin:6px 0 0;
-  color:var(--muted);
-  line-height:1.36;
-  font-size:13px;
-}
-
-.report-badges{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
-
+.report-badges{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;}
 .badge{
-  border-radius:999px;
   padding:7px 9px;
+  border-radius:999px;
   font-size:11px;
-  font-weight:950;
-  white-space:nowrap;
-  background:#f3ebdf;
-  color:#604f39;
+  font-weight:800;
+  background:var(--soft);
 }
-
-.badge.green{background:#dff7e8;color:var(--green);}
-.badge.orange{background:#fff0d7;color:var(--orange);}
-.badge.red{background:#fde6e3;color:var(--red);}
-
+.badge.green{color:var(--green);background:var(--green-bg);}
+.badge.orange{color:var(--orange);background:var(--orange-bg);}
+.badge.red{color:var(--red);background:var(--red-bg);}
 .result{
-  margin:16px;
-  white-space:pre-wrap;
-  background:#15130f;
-  color:#f7efe3;
-  border-radius:24px;
-  padding:20px;
-  min-height:300px;
-  max-height:calc(100vh - 445px);
-  line-height:1.55;
+  margin:0;
+  min-height:250px;
+  max-height:calc(100vh - 520px);
   overflow:auto;
+  padding:22px;
+  white-space:pre-wrap;
+  background:#0d0c0a;
+  color:#fff7e9;
   font-family:ui-monospace,SFMono-Regular,Consolas,Monaco,monospace;
   font-size:13px;
+  line-height:1.62;
 }
-
-.report-actions{
-  padding:0 16px 16px;
-}
-
+.report-actions{padding:14px;}
 .secondary-btn{
   width:100%;
   min-height:48px;
-  padding:0 18px;
   border:1px solid var(--line);
-  border-radius:17px;
   background:#fff;
-  color:var(--ink);
-  font-weight:900;
+  border-radius:999px;
+  color:#111;
+  font-weight:800;
   cursor:pointer;
 }
 
-.info-strip{
-  margin-top:22px;
+.bottom-proof{
+  margin-top:8px;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:14px;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
 }
-
-.info-card{
-  background:rgba(255,255,255,.70);
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:18px;
-  box-shadow:var(--soft-shadow);
-}
-
-.info-card b{
-  display:block;
-  font-size:18px;
-  letter-spacing:-.035em;
-}
-
-.info-card span{
-  display:block;
-  margin-top:7px;
-  color:var(--muted);
-  line-height:1.38;
-  font-size:13px;
-}
-
+.proof{padding:24px 22px;border-right:1px solid var(--line);}
+.proof:last-child{border-right:0;}
+.proof b{display:block;font-size:22px;letter-spacing:-.055em;}
+.proof span{display:block;margin-top:8px;color:var(--muted);font-size:13px;line-height:1.45;font-weight:600;}
 footer{
-  max-width:1240px;
-  margin:0 auto;
-  padding:18px 22px 42px;
-  color:#82786c;
-  font-size:13px;
+  color:#8a857b;
+  font-size:12px;
+  padding:26px 0 44px;
 }
 
-.line-ok{color:#55d88b;font-weight:800;}
-.line-warn{color:#ffbd67;font-weight:900;}
-.line-bad{color:#ff766e;font-weight:900;}
-.line-blue{color:#73c0ff;font-weight:900;}
+.line-ok{color:#77e69c;font-weight:800;}
+.line-warn{color:#ffbf66;font-weight:900;}
+.line-bad{color:#ff7a70;font-weight:900;}
+.line-blue{color:#86c8ff;font-weight:900;}
 
-@media(max-width:1050px){
-  .hero{grid-template-columns:1fr;}
-  .app-grid{grid-template-columns:1fr;}
+@media(max-width:1020px){
+  .hero,.workspace{grid-template-columns:1fr;}
+  .hero-aside{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:24px;}
   .side-panel{position:static;}
-  .result{max-height:620px;}
+  .result{max-height:560px;}
 }
-
 @media(max-width:720px){
-  .brand{align-items:flex-start;flex-direction:column;gap:6px;}
-  .hero{padding-top:30px;}
-  .drop-grid{grid-template-columns:1fr;padding:18px;}
-  .panel-head,.report-head{padding:20px;flex-direction:column;}
-  .report-badges{justify-content:flex-start;}
-  .focus-zone,.action-zone{padding-left:18px;padding-right:18px;}
-  .metrics,.info-strip{grid-template-columns:1fr;}
-  .decision-value{font-size:28px;}
+  .page{padding:0 18px;}
+  .topbar{height:auto;padding:18px 0;align-items:flex-start;flex-direction:column;gap:8px;}
+  .hero{padding-top:42px;gap:32px;}
+  h1{font-size:56px;}
+  .file-card{grid-template-columns:38px minmax(0,1fr);}
+  .file-name{grid-column:2;max-width:100%;width:max-content;}
+  .bottom-proof,.metrics{grid-template-columns:1fr;}
+  .proof{border-right:0;border-bottom:1px solid var(--line);}
+  .proof:last-child{border-bottom:0;}
 }
 </style>
 
@@ -685,97 +477,88 @@ footer{
 </head>
 
 <body>
+<div class="page">
+  <nav class="topbar">
+    <div class="logo"><span class="logo-mark">A</span>ARC CONTROLATOR</div>
+    <div class="powered">Powered by Groupe GTZ</div>
+  </nav>
 
-<div class="topbar">
-  <div class="brand">
-    <strong>ARC CONTROLATOR</strong>
-    <span>Powered by Groupe GTZ</span>
-  </div>
-</div>
-
-<header class="hero">
-  <div class="hero-main">
-    <div class="hero-kicker"><span></span>Contrôle intelligent avant fabrication</div>
-    <h1>Évitez les erreurs de commande.</h1>
-    <p>ARC CONTROLATOR compare le devis, le métrage, la commande fournisseur et l’ARC sur plus de <strong>15 000 points de contrôle</strong> pour détecter les incohérences avant fabrication.</p>
-    <div class="hero-proof">
-      <div class="proof-pill">✓ <b>15 000+</b> vérifications</div>
-      <div class="proof-pill">✓ Verdict immédiat</div>
-      <div class="proof-pill">✓ 99% de fiabilité</div>
-    </div>
-  </div>
-
-  <aside class="hero-card">
+  <header class="hero">
     <div>
-      <div class="big">1 erreur sur l'ARC = Des milliers d'euros perdus</div>
-      <div class="note">Une cote, un coloris, un sens, une option : chaque détail est relu dans le même sens. L’objectif est simple : éviter qu’une erreur de dossier ne vous coûte de l'argent.</div>
-  </aside>
-</header>
-  <main>
-  <div class="app-grid">
-    <section class="panel">
-      <div class="panel-head">
+      <p class="eyebrow">Contrôle intelligent avant fabrication</p>
+      <h1>Évitez les erreurs.</h1>
+      <p class="hero-text">ARC CONTROLATOR compare le devis, le métrage, la commande fournisseur et l’ARC sur plus de <strong>15 000 points de contrôle</strong>. Objectif : repérer les incohérences avant qu’elles ne deviennent des erreurs de fabrication.</p>
+      <div class="hero-actions">
+        <span class="hero-pill"><b>15 000+</b> vérifications</span>
+        <span class="hero-pill">Verdict immédiat</span>
+        <span class="hero-pill">Contrôle fiable</span>
+      </div>
+    </div>
+    <aside class="hero-aside">
+      <div class="aside-number">01</div>
+      <div class="aside-title">Une erreur sur l’ARC peut coûter plusieurs milliers d’euros.</div>
+      <div class="aside-note">Cote, coloris, sens, option, vitrage, quantité : chaque détail est recroisé pour sécuriser l’envoi fabricant.</div>
+    </aside>
+  </header>
+
+  <main class="workspace">
+    <section>
+      <div class="section-title">
         <div>
-          <h2>Dossier à contrôler</h2>
+          <h2>Contrôle</h2>
           <p>Ajoutez les documents disponibles. Tous ne sont pas obligatoires.</p>
         </div>
         <div id="fileCounter" class="counter">0 / 4 fichiers</div>
       </div>
 
-      <div class="drop-grid">
+      <div class="upload-list">
         <label class="file-card" data-file-card="devis">
           <input id="devis" type="file">
           <span class="file-number">1</span>
-          <span class="file-title">Devis client</span>
-          <span class="file-help">Ce qui a été vendu.</span>
+          <span><span class="file-title">Devis client</span><span class="file-help">Ce qui a été vendu.</span></span>
           <span id="devisName" class="file-name empty">Ajouter le fichier</span>
         </label>
 
         <label class="file-card" data-file-card="metrage">
           <input id="metrage" type="file">
           <span class="file-number">2</span>
-          <span class="file-title">Fiche métrage</span>
-          <span class="file-help">Ce qui a été relevé.</span>
+          <span><span class="file-title">Fiche métrage</span><span class="file-help">Ce qui a été relevé.</span></span>
           <span id="metrageName" class="file-name empty">Ajouter le fichier</span>
         </label>
 
         <label class="file-card" data-file-card="commande">
           <input id="commande" type="file">
           <span class="file-number">3</span>
-          <span class="file-title">Commande fournisseur</span>
-          <span class="file-help">Ce que vous envoyez au fabricant.</span>
+          <span><span class="file-title">Commande fournisseur</span><span class="file-help">Ce que vous envoyez au fabricant.</span></span>
           <span id="commandeName" class="file-name empty">Ajouter le fichier</span>
         </label>
 
         <label class="file-card" data-file-card="arc">
           <input id="arc" type="file">
           <span class="file-number">4</span>
-          <span class="file-title">ARC fournisseur</span>
-          <span class="file-help">Ce que le fabricant va fabriquer.</span>
+          <span><span class="file-title">ARC fournisseur</span><span class="file-help">Ce que le fabricant va fabriquer.</span></span>
           <span id="arcName" class="file-name empty">Ajouter le fichier</span>
         </label>
       </div>
 
-      <div class="focus-zone">
-        <label for="consigne">Focus du contrôle</label>
+      <div class="instructions">
+        <label for="consigne">Instructions</label>
         <textarea id="consigne" placeholder="Exemple : contrôler uniquement les fenêtres. Ignorer les volets. Vérifier surtout les sens d’ouverture et les coloris."></textarea>
       </div>
 
       <div class="action-zone">
-        <button id="analyzeBtn" class="primary-btn">Passer le dossier au crible</button>
+        <button id="analyzeBtn" class="primary-btn">Lancer le contrôle</button>
         <span id="status" class="status"></span>
       </div>
     </section>
 
     <aside class="side-panel">
       <section id="decisionBox" class="decision-box waiting">
-        <div class="decision-title">Verdict du contrôle</div>
+        <div class="decision-title">Verdict</div>
         <div class="decision-main">
           <div id="decisionIcon" class="decision-icon">⌛</div>
-          <div>
-            <div id="decisionValue" class="decision-value">En attente</div>
-            <div id="decisionSubtitle" class="decision-subtitle">Ajoutez vos documents puis lancez le contrôle.</div>
-          </div>
+          <div id="decisionValue" class="decision-value">En attente</div>
+          <div id="decisionSubtitle" class="decision-subtitle">Ajoutez vos documents puis lancez le contrôle.</div>
         </div>
 
         <div class="score-row">
@@ -795,45 +578,29 @@ footer{
 
       <section class="report-panel">
         <div class="report-head">
-          <div>
-            <h2>Rapport de contrôle</h2>
-            
-          </div>
+          <h2>Analyse</h2>
           <div class="report-badges">
             <span id="badgeOk" class="badge green">0 OK</span>
             <span id="badgeWarn" class="badge orange">0 doute</span>
             <span id="badgeBad" class="badge red">0 blocage</span>
           </div>
         </div>
-
         <div id="result" class="result">Ajoutez un document, puis lancez le contrôle.</div>
-
         <div class="report-actions">
           <button id="downloadBtn" class="secondary-btn">Exporter le rapport PDF</button>
         </div>
       </section>
     </aside>
-  </div>
+  </main>
 
-  <section class="info-strip">
-    <div class="info-card">
-      <b>15 000+ points croisés</b>
-      <span>Dimensions, coloris, sens d’ouverture, vitrages, options, quantités, accessoires et cohérence globale.</span>
-    </div>
-    <div class="info-card">
-      <b>Un verdict lisible</b>
-      <span>Vert pour valider, orange pour vérifier, rouge pour bloquer avant fabrication.</span>
-    </div>
-    <div class="info-card">
-      <b>Un contrôle utile</b>
-      <span>L’outil aide à décider. La validation finale reste humaine, surtout en cas de doute.</span>
-    </div>
+  <section class="bottom-proof">
+    <div class="proof"><b>15 000+ points croisés</b><span>Dimensions, coloris, sens, vitrages, options, quantités et cohérence globale.</span></div>
+    <div class="proof"><b>Verdict lisible</b><span>Vert pour valider, orange pour vérifier, rouge pour bloquer avant fabrication.</span></div>
+    <div class="proof"><b>Contrôle utile</b><span>L’outil aide à décider. La validation finale reste humaine, surtout en cas de doute.</span></div>
   </section>
-</main>
 
-<footer>
-ARC CONTROLATOR, outil d’aide au contrôle. La validation finale reste humaine.
-</footer>
+  <footer>ARC CONTROLATOR, outil d’aide au contrôle. La validation finale reste humaine.</footer>
+</div>
 
 <script>
 
