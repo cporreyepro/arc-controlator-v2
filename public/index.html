@@ -5,319 +5,443 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ARC CONTROLATOR</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
 :root{
-  --bg:#f6f3ee;
-  --surface:#ffffff;
-  --surface-soft:#fbfaf7;
-  --text:#191816;
-  --muted:#77736b;
-  --line:#e7e0d4;
-  --black:#111111;
-  --gold:#b99755;
-  --gold-soft:#efe5d2;
+  --bg:#f7f3ec;
+  --ink:#191713;
+  --muted:#756f66;
+  --line:#e7ded0;
+  --paper:#fffaf2;
+  --card:#ffffff;
+  --accent:#c88a2a;
+  --accent-dark:#7a4a12;
+  --black:#11100d;
   --green:#1f8f55;
-  --red:#b42318;
-  --orange:#b76e00;
-  --shadow:0 20px 60px rgba(35,31,26,.08);
+  --red:#c5392f;
+  --orange:#d98218;
+  --blue:#2f6f9f;
+  --shadow:0 20px 45px rgba(60,42,20,.10);
 }
 
 *{box-sizing:border-box;}
 
 body{
   margin:0;
-  font-family:"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(185,151,85,.14), transparent 34%),
-    var(--bg);
-  color:var(--text);
+    radial-gradient(circle at top left, rgba(200,138,42,.16), transparent 34%),
+    linear-gradient(180deg,#fbf7ef 0%,#f3ecdf 100%);
+  color:var(--ink);
 }
 
-header{
-  max-width:1160px;
+button,input,textarea{font:inherit;}
+
+.topbar{
+  max-width:1180px;
   margin:0 auto;
-  padding:42px 22px 24px;
+  padding:22px 22px 0;
 }
 
 .brand{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:16px;
-  margin-bottom:38px;
-}
-
-.logo{
-  font-weight:800;
-  letter-spacing:.08em;
-  font-size:14px;
-}
-
-.powered{
-  font-size:13px;
+  gap:18px;
   color:var(--muted);
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.brand strong{
+  color:var(--ink);
+  letter-spacing:.14em;
 }
 
 .hero{
+  max-width:1180px;
+  margin:0 auto;
+  padding:54px 22px 34px;
   display:grid;
-  grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
-  gap:24px;
+  grid-template-columns:1.15fr .85fr;
+  gap:34px;
   align-items:end;
 }
 
-h1{
+.hero h1{
   margin:0;
-  max-width:780px;
-  font-size:clamp(38px,5vw,76px);
+  max-width:760px;
+  font-size:clamp(42px,6vw,78px);
   line-height:.94;
   letter-spacing:-.06em;
+  font-weight:850;
 }
 
-.lead{
-  margin:0;
-  color:var(--muted);
-  font-size:17px;
-  line-height:1.65;
+.hero .highlight{
+  color:var(--accent-dark);
+}
+
+.hero p{
+  margin:22px 0 0;
+  max-width:620px;
+  font-size:18px;
+  line-height:1.55;
+  color:#4e483f;
+}
+
+.hero-card{
+  background:var(--black);
+  color:#fff8ec;
+  border-radius:28px;
+  padding:26px;
+  box-shadow:var(--shadow);
+  transform:rotate(-1deg);
+}
+
+.hero-card .mini{
+  color:#d7c3a3;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+.hero-card .big{
+  margin-top:18px;
+  font-size:34px;
+  line-height:1.05;
+  font-weight:850;
+  letter-spacing:-.04em;
+}
+
+.hero-card .note{
+  margin-top:18px;
+  color:#d7c3a3;
+  line-height:1.45;
 }
 
 main{
-  max-width:1160px;
-  margin:0 auto 34px;
+  max-width:1180px;
+  margin:0 auto 40px;
   padding:0 22px;
 }
 
 .layout{
   display:grid;
-  grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);
+  grid-template-columns:1fr 430px;
   gap:22px;
   align-items:start;
 }
 
-.card{
-  background:rgba(255,255,255,.88);
-  border:1px solid var(--line);
-  border-radius:26px;
-  padding:24px;
+.panel{
+  background:rgba(255,250,242,.88);
+  border:1px solid rgba(231,222,208,.95);
+  border-radius:30px;
   box-shadow:var(--shadow);
-  backdrop-filter:blur(10px);
+  overflow:hidden;
 }
 
-.card + .card{margin-top:18px;}
-
-.card-head{
+.panel-head{
+  padding:24px 26px 18px;
+  border-bottom:1px solid var(--line);
   display:flex;
   justify-content:space-between;
-  gap:16px;
+  gap:20px;
   align-items:flex-start;
-  margin-bottom:20px;
 }
 
-h2{
+.panel-head h2{
   margin:0;
-  font-size:18px;
-  letter-spacing:-.02em;
+  font-size:24px;
+  letter-spacing:-.03em;
 }
 
-.hint{
-  margin:6px 0 0;
+.panel-head p{
+  margin:7px 0 0;
   color:var(--muted);
-  font-size:13px;
-  line-height:1.5;
+  line-height:1.45;
 }
 
-.step{
-  min-width:34px;
-  height:34px;
+.counter{
+  white-space:nowrap;
+  background:#f0e6d7;
+  color:#5f4320;
+  border:1px solid #e2d0b7;
   border-radius:999px;
-  display:grid;
-  place-items:center;
-  background:var(--black);
-  color:white;
+  padding:8px 12px;
+  font-weight:750;
   font-size:13px;
-  font-weight:700;
 }
 
-.grid{
+.drop-grid{
+  padding:26px;
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:14px;
+  gap:16px;
 }
 
-.file-block{
-  background:var(--surface-soft);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:16px;
-}
-
-label{
+.file-card{
+  position:relative;
   display:block;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:10px;
-}
-
-.file-desc{
-  margin:-4px 0 12px;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.35;
-}
-
-input,textarea{
-  width:100%;
-  border:1px solid var(--line);
-  border-radius:14px;
+  min-height:154px;
   background:#fff;
-  color:var(--text);
-  font:inherit;
+  border:1.5px dashed #d7c8b5;
+  border-radius:24px;
+  padding:20px;
+  cursor:pointer;
+  transition:.18s ease;
+}
+
+.file-card:hover{
+  border-color:var(--accent);
+  transform:translateY(-2px);
+  box-shadow:0 14px 28px rgba(60,42,20,.08);
+}
+
+.file-card.has-file{
+  border-style:solid;
+  border-color:#b98a42;
+  background:#fff8ea;
+}
+
+.file-card input{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  cursor:pointer;
+}
+
+.file-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.file-number{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#f1e5d5;
+  color:#6f4515;
+  font-weight:850;
+}
+
+.file-title{
+  margin-top:18px;
+  font-size:20px;
+  line-height:1.1;
+  letter-spacing:-.03em;
+  font-weight:820;
+}
+
+.file-help{
+  margin-top:8px;
+  color:var(--muted);
+  line-height:1.35;
   font-size:14px;
 }
 
-input[type="file"]{
-  padding:10px;
-  cursor:pointer;
-}
-
-input[type="file"]::file-selector-button{
-  border:0;
-  border-radius:10px;
-  background:var(--black);
-  color:white;
-  padding:9px 12px;
-  margin-right:10px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-textarea{
-  min-height:120px;
-  resize:vertical;
-  padding:15px;
-  line-height:1.55;
-}
-
-textarea:focus,input:focus{
-  outline:2px solid rgba(185,151,85,.32);
-  border-color:var(--gold);
-}
-
-.actions{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  flex-wrap:wrap;
+.file-name{
   margin-top:18px;
+  display:block;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#8b5d20;
+  font-weight:760;
+  font-size:14px;
 }
 
-button{
-  appearance:none;
-  border:0;
-  border-radius:14px;
-  padding:14px 18px;
-  background:var(--black);
-  color:white;
-  font:inherit;
-  font-weight:800;
-  cursor:pointer;
-  transition:transform .15s ease, opacity .15s ease, box-shadow .15s ease;
-  box-shadow:0 12px 28px rgba(17,17,17,.16);
-}
-
-button:hover{transform:translateY(-1px);}
-button:disabled{opacity:.45; cursor:not-allowed; transform:none;}
-
-.secondary-button{
-  background:white;
-  color:var(--black);
-  border:1px solid var(--line);
-  box-shadow:none;
-}
-
-.status{
-  color:var(--muted);
-  font-size:13px;
+.file-name.empty{
+  color:#a49a8b;
   font-weight:600;
 }
 
-.side-note{
-  background:var(--gold-soft);
-  border:1px solid rgba(185,151,85,.35);
-  border-radius:20px;
-  padding:18px;
-  color:#514125;
-  font-size:13px;
-  line-height:1.55;
+.focus-zone{
+  padding:0 26px 26px;
 }
 
-.side-note strong{display:block; color:#2a2111; margin-bottom:6px;}
+.focus-zone label{
+  display:block;
+  font-weight:820;
+  margin-bottom:8px;
+  letter-spacing:-.02em;
+}
+
+.focus-zone textarea{
+  width:100%;
+  min-height:126px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:#fff;
+  color:var(--ink);
+  padding:18px;
+  resize:vertical;
+  outline:none;
+  line-height:1.45;
+}
+
+.focus-zone textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(200,138,42,.14);
+}
+
+.action-zone{
+  padding:0 26px 28px;
+  display:flex;
+  gap:14px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.primary-btn{
+  min-height:58px;
+  padding:0 24px;
+  border:0;
+  border-radius:18px;
+  background:var(--black);
+  color:#fff8ec;
+  font-weight:850;
+  font-size:17px;
+  cursor:pointer;
+  box-shadow:0 12px 24px rgba(17,16,13,.16);
+  transition:.18s ease;
+}
+
+.primary-btn:hover{transform:translateY(-1px);}
+.primary-btn:disabled{opacity:.55;cursor:not-allowed;transform:none;}
+
+.status{
+  min-height:24px;
+  color:#6b6257;
+  font-weight:720;
+}
+
+.side-stack{display:grid;gap:22px;}
+
+.big-idea{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:26px;
+  box-shadow:var(--shadow);
+}
+
+.big-idea h3{
+  margin:0;
+  font-size:27px;
+  line-height:1.05;
+  letter-spacing:-.04em;
+}
+
+.big-idea p{
+  margin:14px 0 0;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.steps{
+  margin:22px 0 0;
+  display:grid;
+  gap:10px;
+}
+
+.step{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:#4f473d;
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:99px;
+  background:var(--accent);
+}
 
 .decision-box{
   display:none;
-  border-radius:26px;
-  padding:24px;
-  background:var(--surface);
+  background:#fff;
   border:1px solid var(--line);
+  border-radius:30px;
+  padding:24px;
   box-shadow:var(--shadow);
 }
 
 .decision-title{
   color:var(--muted);
   font-size:12px;
-  font-weight:800;
   letter-spacing:.12em;
   text-transform:uppercase;
-  margin-bottom:8px;
+  font-weight:850;
 }
 
 .decision-value{
-  font-size:36px;
+  margin-top:10px;
+  font-size:42px;
   line-height:1;
+  letter-spacing:-.05em;
   font-weight:900;
-  letter-spacing:-.04em;
+}
+
+.report-panel{
+  margin-top:22px;
 }
 
 .result{
+  margin:0 26px 26px;
   white-space:pre-wrap;
-  background:#171614;
-  color:#f8f5ee;
-  border-radius:20px;
+  background:#171511;
+  color:#f7efe3;
+  border-radius:24px;
   padding:22px;
-  min-height:360px;
-  line-height:1.65;
+  min-height:280px;
+  max-height:650px;
+  line-height:1.58;
   overflow:auto;
-  font-family:"Inter", system-ui, sans-serif;
+  font-family:ui-monospace,SFMono-Regular,Consolas,Monaco,monospace;
   font-size:14px;
 }
 
-.result.empty{color:#8f897f;}
+.report-actions{
+  padding:0 26px 26px;
+}
+
+.secondary-btn{
+  min-height:48px;
+  padding:0 18px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#fff;
+  color:var(--ink);
+  font-weight:820;
+  cursor:pointer;
+}
 
 footer{
-  max-width:1160px;
+  max-width:1180px;
   margin:0 auto;
-  padding:0 22px 30px;
-  color:var(--muted);
-  font-size:12px;
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
+  padding:16px 22px 40px;
+  color:#82786c;
+  font-size:13px;
 }
 
-@media(max-width:900px){
-  .hero,.layout{grid-template-columns:1fr;}
-  .brand{align-items:flex-start; flex-direction:column;}
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr;padding-top:38px;}
+  .hero-card{transform:none;}
+  .layout{grid-template-columns:1fr;}
 }
 
-@media(max-width:720px){
-  header{padding-top:28px;}
-  .grid{grid-template-columns:1fr;}
-  .card{border-radius:20px; padding:18px;}
-  .result{min-height:260px;}
+@media(max-width:700px){
+  .brand{align-items:flex-start;flex-direction:column;gap:6px;}
+  .drop-grid{grid-template-columns:1fr;padding:18px;}
+  .panel-head{padding:20px;flex-direction:column;}
+  .focus-zone,.action-zone{padding-left:18px;padding-right:18px;}
+  .result{margin-left:18px;margin-right:18px;}
 }
 </style>
 
@@ -325,109 +449,118 @@ footer{
 </head>
 
 <body>
-<header>
-  <div class="brand">
-    <div class="logo">ARC CONTROLATOR</div>
-    <div class="powered">Groupe GTZ</div>
-  </div>
 
-  <div class="hero">
-    <h1>Contrôle documentaire avant fabrication.</h1>
-    <p class="lead">Un espace simple pour comparer devis, métrage, commande et ARC. L’objectif : repérer les écarts avant validation.</p>
+<div class="topbar">
+  <div class="brand">
+    <strong>ARC CONTROLATOR</strong>
+    <span>Groupe GTZ</span>
   </div>
+</div>
+
+<header class="hero">
+  <div>
+    <h1>Le garde-fou anti-<span class="highlight">boulette</span>.</h1>
+    <p>On pose les pièces du dossier. L’outil compare. Il sort les écarts avant que la commande parte en fabrication.</p>
+  </div>
+  <aside class="hero-card">
+    <div class="mini">L’idée simple</div>
+    <div class="big">Un dossier propre, ou un voyant rouge.</div>
+    <div class="note">Devis, métrage, commande, ARC : tout est relu dans le même sens. Pas de cinéma. Juste le contrôle qui évite le SAV.</div>
+  </aside>
 </header>
 
 <main>
   <div class="layout">
-    <div>
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <h2>Dossier à contrôler</h2>
-            <p class="hint">Ajoutez uniquement les documents utiles. Tous les champs ne sont pas obligatoires.</p>
-          </div>
-          <div class="step">1</div>
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>Dossier à contrôler</h2>
+          <p>Ajoutez les documents disponibles. Un seul fichier suffit pour lancer une vérification.</p>
         </div>
-
-        <div class="grid">
-          <div class="file-block">
-            <label for="devis">Devis client</label>
-            <p class="file-desc">Base commerciale du dossier.</p>
-            <input id="devis" type="file">
-          </div>
-
-          <div class="file-block">
-            <label for="metrage">Fiche métrage</label>
-            <p class="file-desc">Relevé technique du chantier.</p>
-            <input id="metrage" type="file">
-          </div>
-
-          <div class="file-block">
-            <label for="commande">Commande fournisseur</label>
-            <p class="file-desc">Document transmis au fabricant.</p>
-            <input id="commande" type="file">
-          </div>
-
-          <div class="file-block">
-            <label for="arc">ARC fournisseur</label>
-            <p class="file-desc">Confirmation avant production.</p>
-            <input id="arc" type="file">
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <h2>Focus d’analyse</h2>
-            <p class="hint">Optionnel. Utilisez ce champ pour limiter ou préciser le contrôle.</p>
-          </div>
-          <div class="step">2</div>
-        </div>
-
-        <textarea id="consigne" placeholder="Exemple : contrôler uniquement les menuiseries extérieures. Ne pas tenir compte des volets. Vérifier en priorité les dimensions et les coloris."></textarea>
-        <input id="mode" type="hidden" value="Contrôle documentaire avec focus libre">
-
-        <div class="actions">
-          <button id="analyzeBtn">Contrôler le dossier</button>
-          <span id="status" class="status"></span>
-        </div>
-      </section>
-    </div>
-
-    <aside>
-      <div id="decisionBox" class="decision-box">
-        <div class="decision-title">Décision</div>
-        <div id="decisionValue" class="decision-value"></div>
+        <div id="fileCounter" class="counter">0 / 4 fichiers</div>
       </div>
 
-      <div class="side-note" style="margin-top:18px;">
-        <strong>Lecture conseillée</strong>
-        Le rapport sert d’aide au contrôle. La décision finale doit rester humaine, surtout avant commande ou validation fournisseur.
+      <div class="drop-grid">
+        <label class="file-card" data-file-card="devis">
+          <input id="devis" type="file">
+          <span class="file-top"><span class="file-number">1</span></span>
+          <span class="file-title">Devis client</span>
+          <span class="file-help">Ce qui a été vendu.</span>
+          <span id="devisName" class="file-name empty">Ajouter le fichier</span>
+        </label>
+
+        <label class="file-card" data-file-card="metrage">
+          <input id="metrage" type="file">
+          <span class="file-top"><span class="file-number">2</span></span>
+          <span class="file-title">Fiche métrage</span>
+          <span class="file-help">Ce qui a été relevé.</span>
+          <span id="metrageName" class="file-name empty">Ajouter le fichier</span>
+        </label>
+
+        <label class="file-card" data-file-card="commande">
+          <input id="commande" type="file">
+          <span class="file-top"><span class="file-number">3</span></span>
+          <span class="file-title">Commande fournisseur</span>
+          <span class="file-help">Ce qui va être fabriqué.</span>
+          <span id="commandeName" class="file-name empty">Ajouter le fichier</span>
+        </label>
+
+        <label class="file-card" data-file-card="arc">
+          <input id="arc" type="file">
+          <span class="file-top"><span class="file-number">4</span></span>
+          <span class="file-title">ARC fournisseur</span>
+          <span class="file-help">Ce que le fabricant confirme.</span>
+          <span id="arcName" class="file-name empty">Ajouter le fichier</span>
+        </label>
+      </div>
+
+      <div class="focus-zone">
+        <label for="consigne">Focus du contrôle</label>
+        <textarea id="consigne" placeholder="Exemple : contrôler uniquement les fenêtres. Ignorer les volets. Vérifier surtout les sens d’ouverture et les coloris."></textarea>
+      </div>
+
+      <div class="action-zone">
+        <button id="analyzeBtn" class="primary-btn">Passer le dossier au crible</button>
+        <span id="status" class="status"></span>
+      </div>
+    </section>
+
+    <aside class="side-stack">
+      <section class="big-idea">
+        <h3>Avant de commander, on vérifie.</h3>
+        <p>ARC Controlator n’est pas là pour faire joli. Il sert à attraper les erreurs bêtes : une cote, un coloris, un sens, une option, une quantité.</p>
+        <div class="steps">
+          <div class="step"><span class="dot"></span><span>Déposez les fichiers.</span></div>
+          <div class="step"><span class="dot"></span><span>Ajoutez un focus si besoin.</span></div>
+          <div class="step"><span class="dot"></span><span>Lisez le verdict avant fabrication.</span></div>
+        </div>
+      </section>
+
+      <div id="decisionBox" class="decision-box">
+        <div class="decision-title">Verdict</div>
+        <div id="decisionValue" class="decision-value"></div>
       </div>
     </aside>
   </div>
 
-  <section class="card" style="margin-top:22px;">
-    <div class="card-head">
+  <section class="panel report-panel">
+    <div class="panel-head">
       <div>
-        <h2>Rapport</h2>
-        <p class="hint">Les écarts, points à vérifier et actions proposées apparaîtront ici.</p>
+        <h2>Rapport de contrôle</h2>
+        <p>Les écarts et points à reprendre apparaîtront ici.</p>
       </div>
-      <div class="step">3</div>
     </div>
 
-    <div id="result" class="result empty">Aucun contrôle lancé.</div>
+    <div id="result" class="result">Ajoutez un document, puis lancez le contrôle.</div>
 
-    <div class="actions">
-      <button id="downloadBtn" class="secondary-button">Exporter le rapport PDF</button>
+    <div class="report-actions">
+      <button id="downloadBtn" class="secondary-btn">Exporter le rapport PDF</button>
     </div>
   </section>
 </main>
 
 <footer>
-  <span>ARC CONTROLATOR</span>
-  <span>Validation humaine obligatoire.</span>
+ARC CONTROLATOR — outil d’aide au contrôle. La validation finale reste humaine.
 </footer>
 
 <script>
@@ -436,6 +569,35 @@ const $ = (id)=>document.getElementById(id);
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+function refreshFileUI(){
+  const ids = ["devis","metrage","commande","arc"];
+  let count = 0;
+
+  ids.forEach(id=>{
+    const input = $(id);
+    const name = $(id+"Name");
+    const card = document.querySelector('[data-file-card="'+id+'"]');
+    const file = input.files && input.files[0];
+
+    if(file){
+      count++;
+      name.textContent = file.name;
+      name.classList.remove("empty");
+      card.classList.add("has-file");
+    }else{
+      name.textContent = "Ajouter le fichier";
+      name.classList.add("empty");
+      card.classList.remove("has-file");
+    }
+  });
+
+  $("fileCounter").textContent = count + " / 4 fichier" + (count > 1 ? "s" : "");
+}
+
+["devis","metrage","commande","arc"].forEach(id=>{
+  $(id).addEventListener("change",refreshFileUI);
+});
 
 async function readTextFile(file){
 
@@ -685,7 +847,7 @@ function colorizeReport(report){
 
     /FEU VERT/g,
 
-    '<span style="color:#00c853;font-weight:900;">FEU VERT</span>'
+    '<span style="color:#34d17b;font-weight:900;">FEU VERT</span>'
 
   );
 
@@ -693,7 +855,7 @@ function colorizeReport(report){
 
     /BLOCAGE/g,
 
-    '<span style="color:#d50000;font-weight:900;">BLOCAGE</span>'
+    '<span style="color:#ff6258;font-weight:900;">BLOCAGE</span>'
 
   );
 
@@ -701,7 +863,7 @@ function colorizeReport(report){
 
     /A VERIFIER/g,
 
-    '<span style="color:#ff9800;font-weight:900;">A VERIFIER</span>'
+    '<span style="color:#ffb04f;font-weight:900;">A VERIFIER</span>'
 
   );
 
@@ -709,7 +871,7 @@ function colorizeReport(report){
 
     /Aucune incohérence détectée/g,
 
-    '<span style="color:#00c853;font-weight:700;">Aucune incohérence détectée</span>'
+    '<span style="color:#34d17b;font-weight:700;">Aucune incohérence détectée</span>'
 
   );
 
@@ -717,7 +879,7 @@ function colorizeReport(report){
 
     /INCOHERENCES/g,
 
-    '<span style="color:#d50000;font-weight:900;">INCOHERENCES</span>'
+    '<span style="color:#ff6258;font-weight:900;">INCOHERENCES</span>'
 
   );
 
@@ -725,7 +887,7 @@ function colorizeReport(report){
 
     /POINTS A VERIFIER/g,
 
-    '<span style="color:#ff9800;font-weight:900;">POINTS A VERIFIER</span>'
+    '<span style="color:#ffb04f;font-weight:900;">POINTS A VERIFIER</span>'
 
   );
 
@@ -733,7 +895,7 @@ function colorizeReport(report){
 
     /ACTION/g,
 
-    '<span style="color:#2196f3;font-weight:900;">ACTION</span>'
+    '<span style="color:#67b7ff;font-weight:900;">ACTION</span>'
 
   );
 
@@ -763,7 +925,7 @@ $("analyzeBtn").addEventListener("click",async()=>{
   ){
 
     alert(
-      "Ajoute au moins un document à contrôler."
+      "Ajoute au moins un document. Même le plus petit du dossier."
     );
 
     return;
@@ -771,11 +933,10 @@ $("analyzeBtn").addEventListener("click",async()=>{
   }
 
   $("status").textContent =
-    "Préparation du dossier";
+    "Préparation du dossier...";
 
-  $("result").classList.remove("empty");
   $("result").innerHTML =
-    "Préparation des documents";
+    "Préparation des documents...";
 
   $("decisionBox").style.display =
     "none";
@@ -840,7 +1001,7 @@ $("analyzeBtn").addEventListener("click",async()=>{
 
     const payload = {
 
-      mode:$("mode").value,
+      mode:"Contrôle du dossier selon le focus utilisateur",
 
       consigne:$("consigne").value,
 
@@ -862,10 +1023,10 @@ $("analyzeBtn").addEventListener("click",async()=>{
     }
 
     $("status").textContent =
-      "Analyse en cours";
+      "Contrôle en cours...";
 
     $("result").innerHTML =
-      "Analyse en cours";
+      "Le dossier passe au crible...";
 
     const res = await fetch(
       "/api/analyze",
@@ -907,7 +1068,7 @@ $("analyzeBtn").addEventListener("click",async()=>{
       colorizeReport(report);
 
     $("status").textContent =
-      "Analyse terminée";
+      "Contrôle terminé.";
 
     const upper =
       report.toUpperCase();
@@ -924,7 +1085,7 @@ $("analyzeBtn").addEventListener("click",async()=>{
       upper.includes("A VERIFIER")
     ){
 
-      decision = "A VERIFIER";
+      decision = "À VÉRIFIER";
 
     }else if(
       upper.includes("FEU VERT")
@@ -988,8 +1149,8 @@ $("downloadBtn").addEventListener("click",()=>{
           }
 
           h1{
-            color:#d4af37;
-            border-bottom:3px solid #000;
+            color:#7a4a12;
+            border-bottom:3px solid #111;
             padding-bottom:10px;
           }
 
@@ -1020,6 +1181,9 @@ $("downloadBtn").addEventListener("click",()=>{
 
 });
 
+refreshFileUI();
+
 </script>
+
 </body>
 </html>
